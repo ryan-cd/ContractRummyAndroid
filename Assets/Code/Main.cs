@@ -11,8 +11,9 @@ public class Main : MonoBehaviour {
         deck = new Deck();
         
         print(deck == null);
-        //print(deck.test);
-        deck.createDeck();
+        
+        //this will create a deck, shuffle, and initialize all players with their hands
+        deck.initialize();
 	}
 	
 	// Update is called once per frame

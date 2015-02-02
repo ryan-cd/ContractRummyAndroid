@@ -5,7 +5,8 @@ using System.Collections.Generic;
 public class Deck{
     
     private List<Card> deck = new List<Card>();
-    public int test = 1;
+    private List<Player> playerList = new List<Player>();
+    private int contractNumber = 1;
 	// Use this for initialization
 	void Start () {
         Debug.Log("deck");
@@ -16,7 +17,13 @@ public class Deck{
 	
 	}
 
-    public void createDeck()
+    public void initialize()
+    {
+        _createDeck();
+        _createPlayers();
+    }
+
+    private void _createDeck()
     {
         Debug.Log("creating deck");
         foreach (Card.SUITS suit in System.Enum.GetValues(typeof(Card.SUITS)))
@@ -35,10 +42,10 @@ public class Deck{
             deck.Add(deck[i - 52]);
         }
 
-        shuffleDeck();
+        _shuffleDeck();
     }
 
-    private void shuffleDeck()
+    private void _shuffleDeck()
     {
         int randomIndex;
         for (int i = 0; i < 104; i++)
@@ -48,7 +55,37 @@ public class Deck{
             randomIndex = Random.Range(i, deck.Count);
             deck[i] = deck[randomIndex];
             deck[randomIndex] = temp;
-            Debug.Log(deck[i].suit + " " + deck[i].value + "\n");
+            //Debug.Log(i + " " + deck[i].suit + " " + deck[i].value + "\n");
+        }
+
+        Debug.Log("\nDeck size " + deck.Count);
+    }
+
+    private void _createPlayers()
+    {
+        Debug.Log("\nCreating players in DECK");
+        List<Card> tempHand = new List<Card>();
+        Player tempPlayer;
+
+        for(int i = 0; i < 4; i++)
+        {
+            for(int j = 0; j < 13; j++)
+            {
+                tempHand.Add(deck[i * 13 + j]);
+            }
+            Debug.Log(tempHand.Count);
+            tempPlayer = new Player(tempHand);
+            playerList.Add(tempPlayer);
+            tempHand.Clear();
+        }
+
+        deck.RemoveRange(0, 52);
+        Debug.Log("Deck size = " + deck.Count);
+
+        for (int i = 0; i < playerList.Count; i++)
+        {
+            Debug.Log("\nPlayer " + i);
+            playerList[0].printHand();
         }
     }
 }

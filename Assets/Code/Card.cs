@@ -45,4 +45,9 @@ public class Card {
         else
             this.points = 15;
     }
+
+    public void getHand()
+    {
+        
+    }
 }
