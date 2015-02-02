@@ -2,11 +2,12 @@
 using System.Collections;
 
 public class Card {
-    public enum SUITS { HEARTS, SPADES, DIAMONDS, CLUBS };
+    public enum SUITS { CLUBS, DIAMONDS, HEARTS, SPADES };
     public SUITS suit {get; private set;}
     public int value { get; private set; }
     public int points { get; private set; }
-
+    public int spriteNumber { get; private set; }
+    
 	// Use this for initialization
 	void Start () {
         
@@ -27,14 +28,19 @@ public class Card {
         if (2 <= newValue && newValue <= 14)
         {
             this.value = newValue;
-            setPoints(newValue);
+            _setPoints(newValue);
         }
         else
             throw new UnityException("ERROR: card set to illegal value");
         
     }
 
-    private void setPoints(int value)
+    public void calculateSpriteNumber()
+    {
+        spriteNumber = 4 * this.value + (int)this.suit - 8;
+    }
+
+    private void _setPoints(int value)
     {
         if (value == 2)
             this.points = 20;
@@ -46,8 +52,4 @@ public class Card {
             this.points = 15;
     }
 
-    public void getHand()
-    {
-        
-    }
 }

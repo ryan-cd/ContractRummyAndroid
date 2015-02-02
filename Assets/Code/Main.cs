@@ -2,40 +2,25 @@
 using System.Collections;
 
 public class Main : MonoBehaviour {
-    public Sprite[] cardSprites;
 
-    private Deck deck = null;
+    private Deck deck = new Deck();
     //private Drawing draw = new Drawing();
-    public Drawing draw;
+    public Drawing renderer;
     
 
     void Awake()
     {
-        draw = gameObject.AddComponent<Drawing>();
-        draw.Method();
-        cardSprites = Resources.LoadAll<Sprite>("playingCards");
+        renderer = gameObject.AddComponent<Drawing>();
     }
     
     // Use this for initialization
 	void Start () {
-        print("hello world");
-        draw.Method();
-        //GameObject.Find("PlayerCard0").GetComponent("SpriteRenderer").sprite = sprites.GetSprite("Sprite1");
-        GameObject go = new GameObject();
-        //go = GameObject.Find("PlayerCardT");// new GameObject("go");
-        //go.AddComponent("SpriteRenderer");
-        go.AddComponent<SpriteRenderer>();
-        //go.GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("JD");
-        go.GetComponent<SpriteRenderer>().sprite = cardSprites[12];
-        
-        //go.GetComponent<SpriteRenderer>().sprite = sprites.GetSprite("Sprite1");
-
-        deck = new Deck();
-        
-        print(deck == null);
+        print("Main entry point");
         
         //this will create a deck, shuffle, and initialize all players with their hands
         deck.initialize();
+        renderer.updateState(deck.playerList, deck.drawList, deck.discardList);
+        renderer.draw();
 	}
 	
 	// Update is called once per frame

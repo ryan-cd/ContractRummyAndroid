@@ -5,11 +5,16 @@ using System.Collections.Generic;
 public class Deck{
     
     private List<Card> deck = new List<Card>();
-    private List<Player> playerList = new List<Player>();
+
+    public List<Card> drawList = new List<Card>();
+    public List<Card> discardList = new List<Card>();
+    public List<Player> playerList = new List<Player>();
+
+     
     private int contractNumber = 1;
 	// Use this for initialization
 	void Start () {
-        Debug.Log("deck");
+
 	}
 	
 	// Update is called once per frame
@@ -21,7 +26,13 @@ public class Deck{
     {
         _createDeck();
         _createPlayers();
+        _initializeDrawPile();
     }
+
+    /*
+     * INTERNAL FUNCTIONS
+     * ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     * */
 
     private void _createDeck()
     {
@@ -33,6 +44,7 @@ public class Deck{
                 Card card = new Card();
                 card.setSuit(suit);
                 card.setValue(j);
+                card.calculateSpriteNumber();
                 deck.Add(card);
             }
         }
@@ -78,8 +90,10 @@ public class Deck{
             playerList.Add(tempPlayer);
             tempHand.Clear();
         }
-
+        
         deck.RemoveRange(0, 52);
+
+        
         Debug.Log("Deck size = " + deck.Count);
 
         for (int i = 0; i < playerList.Count; i++)
@@ -88,4 +102,15 @@ public class Deck{
             playerList[0].printHand();
         }
     }
+
+    private void _initializeDrawPile()
+    {
+        drawList = deck;
+    }
+
+    /*
+     * Getters
+     * ~~~~~~~~~~~~~~~~~~~~~~~~~~
+     * */
+    
 }
