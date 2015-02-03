@@ -36,7 +36,6 @@ public class Deck{
 
     private void _createDeck()
     {
-        Debug.Log("creating deck");
         foreach (Card.SUITS suit in System.Enum.GetValues(typeof(Card.SUITS)))
         {
             for (int j = 2; j <= 14; j++)
@@ -67,15 +66,11 @@ public class Deck{
             randomIndex = Random.Range(i, deck.Count);
             deck[i] = deck[randomIndex];
             deck[randomIndex] = temp;
-            //Debug.Log(i + " " + deck[i].suit + " " + deck[i].value + "\n");
         }
-
-        Debug.Log("\nDeck size " + deck.Count);
     }
 
     private void _createPlayers()
     {
-        Debug.Log("\nCreating players in DECK");
         List<Card> tempHand = new List<Card>();
         Player tempPlayer;
 
@@ -93,14 +88,14 @@ public class Deck{
         
         deck.RemoveRange(0, 52);
 
-        
+        /*
         Debug.Log("Deck size = " + deck.Count);
 
         for (int i = 0; i < playerList.Count; i++)
         {
             Debug.Log("\nPlayer " + i);
             playerList[0].printHand();
-        }
+        }*/
     }
 
     private void _initializeDrawPile()

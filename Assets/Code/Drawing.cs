@@ -26,7 +26,6 @@ public class Drawing : MonoBehaviour {
 
     public void updateState(List<Player> playerList, List<Card> drawList, List<Card> discardList)
     {
-        Debug.Log("Draw class updating self");
         this.playerList = playerList;
         this.drawList = drawList;
         this.discardList = discardList;
@@ -34,16 +33,21 @@ public class Drawing : MonoBehaviour {
 
     public void draw()
     {
+        _drawPlayerHand();
+        _drawDrawPile();
+    }
+
+    private void _drawPlayerHand()
+    {
         Vector3 translate = new Vector3();
-        translate[0] = 0;
-        translate[1] = 0;
+        translate[0] = -6;
+        translate[1] = -4;
         translate[2] = 0;
 
-        
 
         for (int i = 0; i < playerList[0].hand.Count; i++)
         {
-            GameObject go = new GameObject();
+            GameObject go = new GameObject("Player"+0+"Card"+i);
             //go = GameObject.Find("PlayerCardT");// new GameObject("go");
             go.transform.Translate(translate);
             go.AddComponent<SpriteRenderer>();
@@ -51,5 +55,19 @@ public class Drawing : MonoBehaviour {
             go.GetComponent<SpriteRenderer>().sprite = cardSprites[playerList[0].hand[i].spriteNumber];
             translate.x += 1;
         }
+    }
+
+    private void _drawDrawPile()
+    {
+        Vector3 translate = new Vector3();
+        translate[0] = 0;
+        translate[1] = 0;
+        translate[2] = 0;
+
+        GameObject go = new GameObject("DrawPile");
+        //go = GameObject.Find("PlayerCardT");// new GameObject("go");
+        go.transform.Translate(translate);
+        go.AddComponent<SpriteRenderer>();
+        go.GetComponent<SpriteRenderer>().sprite = cardSprites[52]; //card backs start at index 52
     }
 }
