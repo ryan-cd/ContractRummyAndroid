@@ -5,7 +5,7 @@ public class Main : MonoBehaviour {
 
     private Deck deck = new Deck();
     //private Drawing draw = new Drawing();
-    public Drawing renderer;
+    public Drawing renderer = null;
     
 
     void Awake()

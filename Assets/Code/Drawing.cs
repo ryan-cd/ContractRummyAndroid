@@ -51,6 +51,7 @@ public class Drawing : MonoBehaviour {
             //go = GameObject.Find("PlayerCardT");// new GameObject("go");
             go.transform.Translate(translate);
             go.AddComponent<SpriteRenderer>();
+            go.AddComponent<BoxCollider>();
             Debug.Log("sprite number: " + playerList[0].hand[i].spriteNumber);
             go.GetComponent<SpriteRenderer>().sprite = cardSprites[playerList[0].hand[i].spriteNumber];
             translate.x += 1;
