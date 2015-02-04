@@ -43,7 +43,8 @@ public class Deck{
                 Card card = new Card();
                 card.setSuit(suit);
                 card.setValue(j);
-                card.calculateSpriteNumber();
+                card.setSpriteNumber(4 * j + (int)suit - 8);
+                //card.calculateSpriteNumber();
                 deck.Add(card);
             }
         }

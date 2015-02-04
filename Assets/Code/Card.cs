@@ -40,6 +40,13 @@ public class Card {
         spriteNumber = 4 * this.value + (int)this.suit - 8;
     }
 
+    public void setSpriteNumber(int spriteNumber)
+    {
+        if (spriteNumber < 0 || spriteNumber > 62)
+            throw new UnityException("card sprite set to out of range sprite number");
+        this.spriteNumber = spriteNumber;
+    }
+
     private void _setPoints(int value)
     {
         if (value == 2)
