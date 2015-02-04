@@ -39,10 +39,7 @@ public class Drawing : MonoBehaviour {
 
     private void _drawPlayerHand()
     {
-        Vector3 translate = new Vector3();
-        translate[0] = -6;
-        translate[1] = -4;
-        translate[2] = 0;
+        Vector3 translate = new Vector3(-6, -4, 0);
 
 
         for (int i = 0; i < playerList[0].hand.Count; i++)
@@ -51,9 +48,12 @@ public class Drawing : MonoBehaviour {
             //go = GameObject.Find("PlayerCardT");// new GameObject("go");
             go.transform.Translate(translate);
             go.AddComponent<SpriteRenderer>();
-            go.AddComponent<BoxCollider>();
-            Debug.Log("sprite number: " + playerList[0].hand[i].spriteNumber);
+            //Debug.Log("sprite number: " + playerList[0].hand[i].spriteNumber);
             go.GetComponent<SpriteRenderer>().sprite = cardSprites[playerList[0].hand[i].spriteNumber];
+
+            go.AddComponent<BoxCollider>();
+            Vector2 boxColliderSize = new Vector2(1.4f, 1.9f);
+            go.GetComponent<BoxCollider>().size = boxColliderSize;
             translate.x += 1;
         }
     }
@@ -70,5 +70,9 @@ public class Drawing : MonoBehaviour {
         go.transform.Translate(translate);
         go.AddComponent<SpriteRenderer>();
         go.GetComponent<SpriteRenderer>().sprite = cardSprites[52]; //card backs start at index 52
+
+        go.AddComponent<BoxCollider>();
+        Vector2 boxColliderSize = new Vector2(1.4f, 1.9f);
+        go.GetComponent<BoxCollider>().size = boxColliderSize;
     }
 }

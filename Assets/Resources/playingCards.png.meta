@@ -117,8 +117,8 @@ TextureImporter:
         y: 834
         width: 140
         height: 190
-      alignment: 6
-      pivot: {x: 0, y: 0}
+      alignment: 0
+      pivot: {x: .5, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}
     - name: 8H
       rect:
@@ -127,8 +127,8 @@ TextureImporter:
         y: 834
         width: 140
         height: 190
-      alignment: 6
-      pivot: {x: 0, y: 0}
+      alignment: 0
+      pivot: {x: .5, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}
     - name: 3H
       rect:
@@ -137,8 +137,8 @@ TextureImporter:
         y: 834
         width: 140
         height: 190
-      alignment: 6
-      pivot: {x: 0, y: 0}
+      alignment: 0
+      pivot: {x: .5, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}
     - name: 14D
       rect:
@@ -147,8 +147,8 @@ TextureImporter:
         y: 834
         width: 140
         height: 190
-      alignment: 6
-      pivot: {x: 0, y: 0}
+      alignment: 0
+      pivot: {x: .5, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}
     - name: 6D
       rect:
@@ -157,8 +157,8 @@ TextureImporter:
         y: 834
         width: 140
         height: 190
-      alignment: 6
-      pivot: {x: 0, y: 0}
+      alignment: 0
+      pivot: {x: .5, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}
     - name: 12C
       rect:
@@ -167,8 +167,8 @@ TextureImporter:
         y: 834
         width: 140
         height: 190
-      alignment: 6
-      pivot: {x: 0, y: 0}
+      alignment: 0
+      pivot: {x: .5, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}
     - name: 12H
       rect:
@@ -177,8 +177,8 @@ TextureImporter:
         y: 834
         width: 140
         height: 190
-      alignment: 6
-      pivot: {x: 0, y: 0}
+      alignment: 0
+      pivot: {x: .5, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}
     - name: 4C
       rect:
@@ -187,8 +187,8 @@ TextureImporter:
         y: 834
         width: 140
         height: 190
-      alignment: 6
-      pivot: {x: 0, y: 0}
+      alignment: 0
+      pivot: {x: .5, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}
     - name: playingCards_8
       rect:
@@ -197,8 +197,8 @@ TextureImporter:
         y: 834
         width: 140
         height: 190
-      alignment: 6
-      pivot: {x: 0, y: 0}
+      alignment: 0
+      pivot: {x: .5, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}
     - name: playingCards_9
       rect:
@@ -207,8 +207,8 @@ TextureImporter:
         y: 834
         width: 140
         height: 190
-      alignment: 6
-      pivot: {x: 0, y: 0}
+      alignment: 0
+      pivot: {x: .5, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}
     - name: 14S
       rect:
@@ -217,8 +217,8 @@ TextureImporter:
         y: 834
         width: 140
         height: 190
-      alignment: 6
-      pivot: {x: 0, y: 0}
+      alignment: 0
+      pivot: {x: .5, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}
     - name: 6S
       rect:
@@ -227,8 +227,8 @@ TextureImporter:
         y: 834
         width: 140
         height: 190
-      alignment: 6
-      pivot: {x: 0, y: 0}
+      alignment: 0
+      pivot: {x: .5, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}
     - name: 9C
       rect:
@@ -237,8 +237,8 @@ TextureImporter:
         y: 834
         width: 140
         height: 190
-      alignment: 6
-      pivot: {x: 0, y: 0}
+      alignment: 0
+      pivot: {x: .5, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}
     - name: playingCards_13
       rect:
@@ -257,8 +257,8 @@ TextureImporter:
         y: 644
         width: 140
         height: 190
-      alignment: 6
-      pivot: {x: 0, y: 0}
+      alignment: 0
+      pivot: {x: .5, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}
     - name: 7H
       rect:
@@ -267,8 +267,8 @@ TextureImporter:
         y: 644
         width: 140
         height: 190
-      alignment: 6
-      pivot: {x: 0, y: 0}
+      alignment: 0
+      pivot: {x: .5, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}
     - name: 2H
       rect:
@@ -277,8 +277,8 @@ TextureImporter:
         y: 644
         width: 140
         height: 190
-      alignment: 6
-      pivot: {x: 0, y: 0}
+      alignment: 0
+      pivot: {x: .5, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}
     - name: 10D
       rect:
@@ -287,8 +287,8 @@ TextureImporter:
         y: 647
         width: 140
         height: 190
-      alignment: 6
-      pivot: {x: 0, y: 0}
+      alignment: 0
+      pivot: {x: .5, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}
     - name: 5D
       rect:
@@ -297,8 +297,8 @@ TextureImporter:
         y: 644
         width: 140
         height: 190
-      alignment: 6
-      pivot: {x: 0, y: 0}
+      alignment: 0
+      pivot: {x: .5, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}
     - name: 13C
       rect:
@@ -307,8 +307,8 @@ TextureImporter:
         y: 644
         width: 140
         height: 190
-      alignment: 6
-      pivot: {x: 0, y: 0}
+      alignment: 0
+      pivot: {x: .5, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}
     - name: 8C
       rect:
@@ -317,8 +317,8 @@ TextureImporter:
         y: 644
         width: 140
         height: 190
-      alignment: 6
-      pivot: {x: 0, y: 0}
+      alignment: 0
+      pivot: {x: .5, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}
     - name: 3C
       rect:
@@ -327,8 +327,8 @@ TextureImporter:
         y: 641
         width: 140
         height: 190
-      alignment: 6
-      pivot: {x: 0, y: 0}
+      alignment: 0
+      pivot: {x: .5, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}
     - name: BR
       rect:
@@ -337,8 +337,8 @@ TextureImporter:
         y: 647
         width: 140
         height: 190
-      alignment: 6
-      pivot: {x: 0, y: 0}
+      alignment: 0
+      pivot: {x: .5, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}
     - name: playingCards_23
       rect:
@@ -347,8 +347,8 @@ TextureImporter:
         y: 644
         width: 140
         height: 190
-      alignment: 6
-      pivot: {x: 0, y: 0}
+      alignment: 0
+      pivot: {x: .5, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}
     - name: 10S
       rect:
@@ -357,8 +357,8 @@ TextureImporter:
         y: 644
         width: 140
         height: 190
-      alignment: 6
-      pivot: {x: 0, y: 0}
+      alignment: 0
+      pivot: {x: .5, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}
     - name: 5S
       rect:
@@ -367,8 +367,8 @@ TextureImporter:
         y: 644
         width: 140
         height: 190
-      alignment: 6
-      pivot: {x: 0, y: 0}
+      alignment: 0
+      pivot: {x: .5, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}
     - name: playingCards_26
       rect:
@@ -397,8 +397,8 @@ TextureImporter:
         y: 454
         width: 140
         height: 190
-      alignment: 6
-      pivot: {x: 0, y: 0}
+      alignment: 0
+      pivot: {x: .5, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}
     - name: 6H
       rect:
@@ -407,8 +407,8 @@ TextureImporter:
         y: 454
         width: 140
         height: 190
-      alignment: 6
-      pivot: {x: 0, y: 0}
+      alignment: 0
+      pivot: {x: .5, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}
     - name: 12D
       rect:
@@ -417,8 +417,8 @@ TextureImporter:
         y: 454
         width: 140
         height: 190
-      alignment: 6
-      pivot: {x: 0, y: 0}
+      alignment: 0
+      pivot: {x: .5, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}
     - name: 9D
       rect:
@@ -427,8 +427,8 @@ TextureImporter:
         y: 454
         width: 140
         height: 190
-      alignment: 6
-      pivot: {x: 0, y: 0}
+      alignment: 0
+      pivot: {x: .5, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}
     - name: 4D
       rect:
@@ -437,8 +437,8 @@ TextureImporter:
         y: 454
         width: 140
         height: 190
-      alignment: 6
-      pivot: {x: 0, y: 0}
+      alignment: 0
+      pivot: {x: .5, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}
     - name: 11C
       rect:
@@ -447,8 +447,8 @@ TextureImporter:
         y: 454
         width: 140
         height: 190
-      alignment: 6
-      pivot: {x: 0, y: 0}
+      alignment: 0
+      pivot: {x: .5, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}
     - name: 7C
       rect:
@@ -457,8 +457,8 @@ TextureImporter:
         y: 454
         width: 140
         height: 190
-      alignment: 6
-      pivot: {x: 0, y: 0}
+      alignment: 0
+      pivot: {x: .5, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}
     - name: 2C
       rect:
@@ -467,8 +467,8 @@ TextureImporter:
         y: 454
         width: 140
         height: 190
-      alignment: 6
-      pivot: {x: 0, y: 0}
+      alignment: 0
+      pivot: {x: .5, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}
     - name: playingCards_36
       rect:
@@ -477,8 +477,8 @@ TextureImporter:
         y: 454
         width: 140
         height: 190
-      alignment: 6
-      pivot: {x: 0, y: 0}
+      alignment: 0
+      pivot: {x: .5, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}
     - name: 12S
       rect:
@@ -487,8 +487,8 @@ TextureImporter:
         y: 454
         width: 140
         height: 190
-      alignment: 6
-      pivot: {x: 0, y: 0}
+      alignment: 0
+      pivot: {x: .5, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}
     - name: 9S
       rect:
@@ -497,8 +497,8 @@ TextureImporter:
         y: 454
         width: 140
         height: 190
-      alignment: 6
-      pivot: {x: 0, y: 0}
+      alignment: 0
+      pivot: {x: .5, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}
     - name: 4S
       rect:
@@ -507,8 +507,8 @@ TextureImporter:
         y: 454
         width: 140
         height: 190
-      alignment: 6
-      pivot: {x: 0, y: 0}
+      alignment: 0
+      pivot: {x: .5, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}
     - name: playingCards_40
       rect:
@@ -527,8 +527,8 @@ TextureImporter:
         y: 264
         width: 140
         height: 190
-      alignment: 6
-      pivot: {x: 0, y: 0}
+      alignment: 0
+      pivot: {x: .5, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}
     - name: 5H
       rect:
@@ -537,8 +537,8 @@ TextureImporter:
         y: 264
         width: 140
         height: 190
-      alignment: 6
-      pivot: {x: 0, y: 0}
+      alignment: 0
+      pivot: {x: .5, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}
     - name: 13D
       rect:
@@ -547,8 +547,8 @@ TextureImporter:
         y: 264
         width: 140
         height: 190
-      alignment: 6
-      pivot: {x: 0, y: 0}
+      alignment: 0
+      pivot: {x: .5, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}
     - name: 8D
       rect:
@@ -557,8 +557,8 @@ TextureImporter:
         y: 264
         width: 140
         height: 190
-      alignment: 6
-      pivot: {x: 0, y: 0}
+      alignment: 0
+      pivot: {x: .5, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}
     - name: 3D
       rect:
@@ -567,8 +567,8 @@ TextureImporter:
         y: 264
         width: 140
         height: 190
-      alignment: 6
-      pivot: {x: 0, y: 0}
+      alignment: 0
+      pivot: {x: .5, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}
     - name: 14C
       rect:
@@ -577,8 +577,8 @@ TextureImporter:
         y: 264
         width: 140
         height: 190
-      alignment: 6
-      pivot: {x: 0, y: 0}
+      alignment: 0
+      pivot: {x: .5, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}
     - name: 6C
       rect:
@@ -587,8 +587,8 @@ TextureImporter:
         y: 264
         width: 140
         height: 190
-      alignment: 6
-      pivot: {x: 0, y: 0}
+      alignment: 0
+      pivot: {x: .5, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}
     - name: BB
       rect:
@@ -597,8 +597,8 @@ TextureImporter:
         y: 264
         width: 140
         height: 190
-      alignment: 6
-      pivot: {x: 0, y: 0}
+      alignment: 0
+      pivot: {x: .5, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}
     - name: playingCards_49
       rect:
@@ -607,8 +607,8 @@ TextureImporter:
         y: 264
         width: 140
         height: 190
-      alignment: 6
-      pivot: {x: 0, y: 0}
+      alignment: 0
+      pivot: {x: .5, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}
     - name: 13S
       rect:
@@ -617,8 +617,8 @@ TextureImporter:
         y: 264
         width: 140
         height: 190
-      alignment: 6
-      pivot: {x: 0, y: 0}
+      alignment: 0
+      pivot: {x: .5, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}
     - name: 8S
       rect:
@@ -627,8 +627,8 @@ TextureImporter:
         y: 264
         width: 140
         height: 190
-      alignment: 6
-      pivot: {x: 0, y: 0}
+      alignment: 0
+      pivot: {x: .5, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}
     - name: 3S
       rect:
@@ -637,8 +637,8 @@ TextureImporter:
         y: 264
         width: 140
         height: 190
-      alignment: 6
-      pivot: {x: 0, y: 0}
+      alignment: 0
+      pivot: {x: .5, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}
     - name: playingCards_53
       rect:
@@ -657,8 +657,8 @@ TextureImporter:
         y: 74
         width: 140
         height: 190
-      alignment: 6
-      pivot: {x: 0, y: 0}
+      alignment: 0
+      pivot: {x: .5, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}
     - name: 4H
       rect:
@@ -667,8 +667,8 @@ TextureImporter:
         y: 74
         width: 140
         height: 190
-      alignment: 6
-      pivot: {x: 0, y: 0}
+      alignment: 0
+      pivot: {x: .5, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}
     - name: 11D
       rect:
@@ -677,8 +677,8 @@ TextureImporter:
         y: 74
         width: 140
         height: 190
-      alignment: 6
-      pivot: {x: 0, y: 0}
+      alignment: 0
+      pivot: {x: .5, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}
     - name: 7D
       rect:
@@ -687,8 +687,8 @@ TextureImporter:
         y: 74
         width: 140
         height: 190
-      alignment: 6
-      pivot: {x: 0, y: 0}
+      alignment: 0
+      pivot: {x: .5, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}
     - name: 2D
       rect:
@@ -697,8 +697,8 @@ TextureImporter:
         y: 74
         width: 140
         height: 190
-      alignment: 6
-      pivot: {x: 0, y: 0}
+      alignment: 0
+      pivot: {x: .5, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}
     - name: 10C
       rect:
@@ -707,8 +707,8 @@ TextureImporter:
         y: 74
         width: 140
         height: 190
-      alignment: 6
-      pivot: {x: 0, y: 0}
+      alignment: 0
+      pivot: {x: .5, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}
     - name: 5C
       rect:
@@ -717,8 +717,8 @@ TextureImporter:
         y: 74
         width: 140
         height: 190
-      alignment: 6
-      pivot: {x: 0, y: 0}
+      alignment: 0
+      pivot: {x: .5, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}
     - name: playingCards_61
       rect:
@@ -727,8 +727,8 @@ TextureImporter:
         y: 74
         width: 140
         height: 190
-      alignment: 6
-      pivot: {x: 0, y: 0}
+      alignment: 0
+      pivot: {x: .5, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}
     - name: BG
       rect:
@@ -737,8 +737,8 @@ TextureImporter:
         y: 74
         width: 140
         height: 190
-      alignment: 6
-      pivot: {x: 0, y: 0}
+      alignment: 0
+      pivot: {x: .5, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}
     - name: 11S
       rect:
@@ -747,8 +747,8 @@ TextureImporter:
         y: 74
         width: 140
         height: 190
-      alignment: 6
-      pivot: {x: 0, y: 0}
+      alignment: 0
+      pivot: {x: .5, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}
     - name: 7S
       rect:
@@ -757,8 +757,8 @@ TextureImporter:
         y: 74
         width: 140
         height: 190
-      alignment: 6
-      pivot: {x: 0, y: 0}
+      alignment: 0
+      pivot: {x: .5, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}
     - name: 2S
       rect:
@@ -767,8 +767,8 @@ TextureImporter:
         y: 74
         width: 140
         height: 190
-      alignment: 6
-      pivot: {x: 0, y: 0}
+      alignment: 0
+      pivot: {x: .5, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}
     - name: playingCards_66
       rect:

@@ -80,7 +80,6 @@ public class Deck{
             {
                 tempHand.Add(deck[i * 13 + j]);
             }
-            Debug.Log(tempHand.Count);
             tempPlayer = new Player(tempHand);
             playerList.Add(tempPlayer);
             tempHand.Clear();

@@ -13,12 +13,11 @@ public class Main : MonoBehaviour {
         renderer = gameObject.AddComponent<Drawing>();
     }
     
-    // Use this for initialization
+    // This is the program entry point
 	void Start () {
-        print("Main entry point");
-        
         //this will create a deck, shuffle, and initialize all players with their hands
         deck.initialize();
+        //this will draw the game that the deck establishes
         renderer.updateState(deck.playerList, deck.drawList, deck.discardList);
         renderer.draw();
 	}
