@@ -3,6 +3,14 @@ using System.Collections;
 using System.Collections.Generic;
 
 public class Drawing : MonoBehaviour {
+    /*private struct handParameters
+    {
+        Vector3 translate;
+        int deltaX;
+        int deltaY;
+        int deltaZ;
+    };*/
+    
     public Sprite[] cardSprites;
 
     private List<Player> playerList;
@@ -39,7 +47,7 @@ public class Drawing : MonoBehaviour {
 
     private void _drawPlayerHand()
     {
-        Vector3 translate = new Vector3(-6, -4, 0);
+        Vector3 translate = new Vector3(-6, -4, 20);
 
 
         for (int i = 0; i < playerList[0].hand.Count; i++)
@@ -55,6 +63,7 @@ public class Drawing : MonoBehaviour {
             Vector2 boxColliderSize = new Vector2(1.4f, 1.9f);
             go.GetComponent<BoxCollider>().size = boxColliderSize;
             translate.x += 1;
+            translate.z -= 1;
         }
     }
 
