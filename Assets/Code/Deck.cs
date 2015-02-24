@@ -5,13 +5,22 @@ using System.Collections.Generic;
 public class Deck{
     
     private List<Card> deck = new List<Card>();
-
     public List<Card> drawList = new List<Card>();
     public List<Card> discardList = new List<Card>();
     public List<Player> playerList = new List<Player>();
+    private int playerTurn = 0;
+    public GameObject lastGameObjectHit = null;
 
-     
-    private int contractNumber = 1;
+    private enum state
+    {
+        MENU, DEALING, CHECK, TURN
+    };
+    private state gameState;
+
+    void Awake()
+    {
+        gameState = state.DEALING;
+    }
 	// Use this for initialization
 	void Start () {
 
@@ -19,7 +28,7 @@ public class Deck{
 	
 	// Update is called once per frame
 	void Update () {
-	
+
 	}
 
     public void initialize()
@@ -27,6 +36,13 @@ public class Deck{
         _createDeck();
         _createPlayers();
         _initializeDrawPile();
+    }
+
+    public void handleInput(GameObject input)
+    {
+        this.lastGameObjectHit = input;
+        if (input != null)
+            Debug.Log(input.name);
     }
 
     /*

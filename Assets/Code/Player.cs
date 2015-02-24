@@ -4,6 +4,8 @@ using System.Collections.Generic;
 
 public class Player {
     public List<Card> hand = new List<Card>();
+    public int contract = 1;
+    public int score = 0;
     
     //Constructor
     public Player(List<Card> hand)
