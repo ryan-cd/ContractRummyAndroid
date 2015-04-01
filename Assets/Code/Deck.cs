@@ -11,15 +11,15 @@ public class Deck{
     private int playerTurn = 0;
     public GameObject lastGameObjectHit = null;
 
-    private enum state
+    private enum GameState
     {
         MENU, DEALING, CHECK, TURN
     };
-    private state gameState;
+    private GameState gameState;
 
     void Awake()
     {
-        gameState = state.DEALING;
+        gameState = GameState.DEALING;
     }
 	// Use this for initialization
 	void Start () {
@@ -28,7 +28,19 @@ public class Deck{
 	
 	// Update is called once per frame
 	void Update () {
+        if (gameState == GameState.DEALING)
+        {
 
+        }
+        else if (gameState == GameState.CHECK)
+        {
+            _checkHands();
+            gameState = GameState.TURN;
+        }
+        else if (gameState == GameState.TURN)
+        {
+
+        }
 	}
 
     public void initialize()
@@ -36,13 +48,19 @@ public class Deck{
         _createDeck();
         _createPlayers();
         _initializeDrawPile();
+        gameState = GameState.CHECK;
     }
 
     public void handleInput(GameObject input)
     {
-        this.lastGameObjectHit = input;
         if (input != null)
             Debug.Log(input.name);
+        if (gameState == GameState.TURN)
+        {
+            Debug.Log("turn");
+            this.lastGameObjectHit = input;
+            
+        }
     }
 
     /*
@@ -96,6 +114,7 @@ public class Deck{
             for(int j = 0; j < 13; j++)
             {
                 tempHand.Add(deck[i * 13 + j]);
+                tempHand[j].setLocationTag(Card.LOCATIONTAGS.HAND);
             }
             tempPlayer = new Player(tempHand);
             playerList.Add(tempPlayer);
@@ -117,6 +136,11 @@ public class Deck{
     private void _initializeDrawPile()
     {
         drawList = deck;
+    }
+
+    private void _checkHands()
+    {
+        
     }
 
     /*

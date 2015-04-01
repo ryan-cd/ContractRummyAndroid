@@ -4,8 +4,9 @@ using System.Collections.Generic;
 
 public class Player {
     public List<Card> hand = new List<Card>();
-    public int contract = 1;
+    public int contractNumber = 1;
     public int score = 0;
+    public bool hasContract {get; private set;}
     
     //Constructor
     public Player(List<Card> hand)
@@ -32,6 +33,40 @@ public class Player {
         for (int i = 0; i < hand.Count; i++)
         {
             Debug.Log(i + " " + hand[i].suit + " " + hand[i].value + "\n");
+        }
+    }
+
+    /*
+     * MUTATORS
+     * 
+     * */
+    public void checkIfContractComplete()
+    {
+        switch(contractNumber)
+        {
+            case 1:
+                
+                break;
+            case 2:
+
+                break;
+            case 3:
+
+                break;
+            case 4:
+
+                break;
+            case 5:
+
+                break;
+            case 6:
+
+                break;
+            case 7:
+
+                break;
+            default:
+                throw new UnityException("A player has reached an illegal contract number");
         }
     }
 }

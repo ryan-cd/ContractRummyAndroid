@@ -4,6 +4,10 @@ using System.Collections;
 public class Card {
     public enum SUITS { CLUBS, DIAMONDS, HEARTS, SPADES };
     public SUITS suit {get; private set;}
+    //This information will allow the renderer to offset the cards
+    //according to their status. (ex: a drawn card is higher up)
+    public enum LOCATIONTAGS { HAND, CONTRACT, DRAWN };
+    public LOCATIONTAGS locationTag { get; private set; }
     public int value { get; private set; }
     public int points { get; private set; }
     public int spriteNumber { get; private set; }
@@ -33,6 +37,11 @@ public class Card {
         else
             throw new UnityException("ERROR: card set to illegal value");
         
+    }
+
+    public void setLocationTag(LOCATIONTAGS newLocationTag)
+    {
+        this.locationTag = newLocationTag;
     }
 
     public void calculateSpriteNumber()
