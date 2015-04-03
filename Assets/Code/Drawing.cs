@@ -72,8 +72,19 @@ public class Drawing : MonoBehaviour {
     {
         for (int i = 0; i < 4; i++)
         {
-            Vector3 tempTranslate = playerPositionList[i];
+            //delete gameobjects that are no longer in use
+            for (int w = 13; w >= 0 && w > playerList[i].hand.Count-1; w--)
+            {
+                GameObject garbageObject = GameObject.Find("Player" + i + "Card" + w);
+                if (garbageObject != null)
+                {
+                    Destroy(garbageObject);
+                }
+            }
 
+            Vector3 tempTranslate = playerPositionList[i];
+            //Debug.Log("Player has: " + playerList[0].hand.Count + " cards");
+            
             for (int j = 0; j < playerList[i].hand.Count; j++)
             {
                 GameObject go;
@@ -87,8 +98,14 @@ public class Drawing : MonoBehaviour {
                     Vector2 boxColliderSize = new Vector2(1.4f, 1.9f);
                     go.GetComponent<BoxCollider>().size = boxColliderSize;
                 }
-                
+
+                if (playerList[i].hand[j].locationTag == Card.LOCATIONTAGS.DRAWN
+                    && j == playerList[i].hand.Count-1)
+                {
+                    tempTranslate.y += cardOffset;
+                }
                 go.transform.position = tempTranslate;
+               
                 go.GetComponent<SpriteRenderer>().sprite = cardSprites[playerList[i].hand[j].spriteNumber];
 
 

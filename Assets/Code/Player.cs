@@ -4,6 +4,7 @@ using System.Collections.Generic;
 
 public class Player {
     public List<Card> hand = new List<Card>();
+    //private Card discard = null;
     public int contractNumber = 1;
     public int score = 0;
     public bool hasContract {get; private set;}
@@ -27,6 +28,13 @@ public class Player {
 	
 	}
 
+    /*public Card getDiscardedCard()
+    {
+        Card tempCard = discard;
+        discard = null;
+        return tempCard;
+    }*/
+
     public void printHand()
     {
         Debug.Log("\nplayer has " + hand.Count + " cards");
@@ -40,6 +48,33 @@ public class Player {
      * MUTATORS
      * 
      * */
+
+    public void drawCard(Card newCard)
+    {
+        newCard.setLocationTag(Card.LOCATIONTAGS.DRAWN);
+        hand.Add(newCard);
+    }
+
+    /*public void discardCard(Card card)
+    {
+        
+        //this.discard = card;
+        hand.Remove(card);
+        foreach (Card c in hand)
+        {
+            c.setLocationTag(Card.LOCATIONTAGS.DEFAULT);
+        }
+    }*/
+
+    public void discardCard(int index)
+    {
+        hand.RemoveAt(index);
+        foreach (Card c in hand)
+        {
+            c.setLocationTag(Card.LOCATIONTAGS.DEFAULT);
+        }
+    }
+
     public void checkIfContractComplete()
     {
         switch(contractNumber)

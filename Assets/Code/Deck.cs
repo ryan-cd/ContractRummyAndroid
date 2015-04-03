@@ -8,17 +8,21 @@ public class Deck{
     public List<Card> drawList = new List<Card>();
     public List<Card> discardList = new List<Card>();
     public List<Player> playerList = new List<Player>();
+    public const int handSize = 13;
+    public const int numPlayers = 4;
     private int playerTurn = 0;
     public GameObject lastGameObjectHit = null;
+    public GameObject currentGameObjectHit = null;
 
     private enum GameState
     {
-        MENU, DEALING, CHECK, TURN
+        MENU, DEALING, CHECK, DRAWING, DISCARDING
     };
     private GameState gameState;
 
-    void Awake()
+    /*void Awake()
     {
+        Debug.Log("Awake function reached");
         gameState = GameState.DEALING;
     }
 	// Use this for initialization
@@ -28,6 +32,7 @@ public class Deck{
 	
 	// Update is called once per frame
 	void Update () {
+        //this function is never called since Deck doesnt implement MonoBehavior
         if (gameState == GameState.DEALING)
         {
 
@@ -39,27 +44,57 @@ public class Deck{
         }
         else if (gameState == GameState.TURN)
         {
-
+            
         }
-	}
+	}*/
 
     public void initialize()
     {
+        gameState = GameState.DEALING;
         _createDeck();
         _createPlayers();
         _initializeDrawPile();
-        gameState = GameState.CHECK;
+        gameState = GameState.DRAWING;
     }
 
     public void handleInput(GameObject input)
     {
-        if (input != null)
-            Debug.Log(input.name);
-        if (gameState == GameState.TURN)
+
+        //if (input != null)
+            //Debug.Log("name: "+ input.name + " sprite: "+ input.GetComponent<SpriteRenderer>().sprite);
+        
+        this.currentGameObjectHit = input;
+        
+        if (this.currentGameObjectHit != this.lastGameObjectHit)
         {
-            Debug.Log("turn");
-            this.lastGameObjectHit = input;
-            
+
+            this.lastGameObjectHit = this.currentGameObjectHit;
+            if (gameState == GameState.DRAWING)
+            {
+                if (currentGameObjectHit.name == "DrawPile")
+                {
+                    playerList[playerTurn].drawCard(drawList[0]);
+                    drawList.RemoveAt(0);
+                    gameState = GameState.DISCARDING;
+                }
+
+                return;
+            }
+
+            if (gameState == GameState.DISCARDING)
+            {
+                string cardNumberString = currentGameObjectHit.name.Substring(11);
+                //int cardNumber = int.Parse(currentGameObjectHit.name.Substring(11));
+                int cardNumber = int.Parse(cardNumberString);
+                Debug.Log(currentGameObjectHit.name.Substring(11)+" "+cardNumber);
+                if (currentGameObjectHit.name.Substring(0,11) == "Player0Card")
+                {
+                    discardList.Add(playerList[playerTurn].hand[cardNumber]);
+                    playerList[playerTurn].discardCard(cardNumber);
+                    
+                    gameState = GameState.DRAWING;
+                }
+            }
         }
     }
 
@@ -109,12 +144,12 @@ public class Deck{
         List<Card> tempHand = new List<Card>();
         Player tempPlayer;
 
-        for(int i = 0; i < 4; i++)
+        for(int i = 0; i < numPlayers; i++)
         {
-            for(int j = 0; j < 13; j++)
+            for (int j = 0; j < handSize; j++)
             {
-                tempHand.Add(deck[i * 13 + j]);
-                tempHand[j].setLocationTag(Card.LOCATIONTAGS.HAND);
+                tempHand.Add(deck[i * handSize + j]);
+                tempHand[j].setLocationTag(Card.LOCATIONTAGS.DEFAULT);
             }
             tempPlayer = new Player(tempHand);
             playerList.Add(tempPlayer);

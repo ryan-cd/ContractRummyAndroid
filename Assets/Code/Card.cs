@@ -6,7 +6,7 @@ public class Card {
     public SUITS suit {get; private set;}
     //This information will allow the renderer to offset the cards
     //according to their status. (ex: a drawn card is higher up)
-    public enum LOCATIONTAGS { HAND, CONTRACT, DRAWN };
+    public enum LOCATIONTAGS { DEFAULT, CONTRACT, DRAWN };
     public LOCATIONTAGS locationTag { get; private set; }
     public int value { get; private set; }
     public int points { get; private set; }
