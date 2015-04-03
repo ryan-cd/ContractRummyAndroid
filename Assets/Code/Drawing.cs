@@ -31,6 +31,8 @@ public class Drawing : MonoBehaviour {
     private List<Card> drawList;    
     public List<Card> discardList;
 
+    public Card lastDiscardedCard = null;
+
     private bool firstDraw = true;
     
     void Awake()
@@ -60,6 +62,8 @@ public class Drawing : MonoBehaviour {
         this.playerList = playerList;
         this.drawList = drawList;
         this.discardList = discardList;
+        if (discardList.Count > 0)
+            lastDiscardedCard = discardList[discardList.Count - 1];
     }
 
     public void draw()
@@ -120,25 +124,105 @@ public class Drawing : MonoBehaviour {
 
     private void _drawPiles()
     {
+        if (discardList.Count == 0 && GameObject.Find("DiscardPile") != null)
+        {
+            Destroy(GameObject.Find("DiscardPile"));
+        }
+        if (drawList.Count == 0 && GameObject.Find("DrawPile") != null)
+        {
+            Destroy(GameObject.Find("DrawPile"));
+        }
+        _drawDrawPile();
+        _drawDiscardPile();
         
+        /*for (int i = 0; i < 2; i++)
+        {
+            Vector3 translate = pilePositions[i];
+
+            GameObject go = null;
+            if (i == 0)
+                go = GameObject.Find("DrawPile");
+            else if (i == 1)
+                go = GameObject.Find("DiscardPile");
+
+            if (go == null && drawList.Count > 0)
+            {
+                if (i == 0)
+                    go = new GameObject("DrawPile");
+                else if (i == 1)
+                    go = new GameObject("DiscardPile");
+                go.AddComponent<SpriteRenderer>();
+                go.AddComponent<BoxCollider>();
+                go.GetComponent<Transform>().localScale = new Vector3(0.7f, 0.7f, 1f);
+                Vector2 boxColliderSize = new Vector2(1.4f, 1.9f);
+                go.GetComponent<BoxCollider>().size = boxColliderSize;
+            }
+            
+            go.transform.position = translate;
+            if(i == 0)
+                go.GetComponent<SpriteRenderer>().sprite = cardSprites[52]; //card backs start at index 52
+            else if (i == 1)
+            {
+                if (lastDiscardedCard == null)
+                    break;
+                else
+                    go.GetComponent<SpriteRenderer>().sprite = cardSprites[lastDiscardedCard.spriteNumber];
+            }
+
+        }*/
+        
+    }
+
+    private void _drawDrawPile()
+    {
         Vector3 translate = pilePositions[0];
 
-        GameObject go;
-        go = GameObject.Find("DrawPile");
-        if (go == null)
+        GameObject go = GameObject.Find("DrawPile");
+        
+        if (go == null && drawList.Count > 0)
         {
             go = new GameObject("DrawPile");
+
             go.AddComponent<SpriteRenderer>();
             go.AddComponent<BoxCollider>();
             go.GetComponent<Transform>().localScale = new Vector3(0.7f, 0.7f, 1f);
             Vector2 boxColliderSize = new Vector2(1.4f, 1.9f);
             go.GetComponent<BoxCollider>().size = boxColliderSize;
+            go.transform.position = translate;
+            go.GetComponent<SpriteRenderer>().sprite = cardSprites[52]; //card backs start at index 52
+        
         }
-        //go = GameObject.Find("PlayerCardT");// new GameObject("go");
-        go.transform.position = translate;
-        go.GetComponent<SpriteRenderer>().sprite = cardSprites[52]; //card backs start at index 52
-
         
         
     }
+
+    private void _drawDiscardPile()
+    {
+        Vector3 translate = pilePositions[1];
+
+        GameObject go = GameObject.Find("DiscardPile");
+
+        if (discardList.Count > 0)
+        {
+            if (go == null)
+            {
+                go = new GameObject("DiscardPile");
+                go.AddComponent<SpriteRenderer>();
+                go.AddComponent<BoxCollider>();
+            }
+            go.GetComponent<Transform>().localScale = new Vector3(0.7f, 0.7f, 1f);
+            Vector2 boxColliderSize = new Vector2(1.4f, 1.9f);
+            go.GetComponent<BoxCollider>().size = boxColliderSize;
+            go.transform.position = translate;
+
+            if (lastDiscardedCard == null)
+                return;
+            else
+                go.GetComponent<SpriteRenderer>().sprite = cardSprites[lastDiscardedCard.spriteNumber];
+        
+        }
+
+        
+    }
+
 }

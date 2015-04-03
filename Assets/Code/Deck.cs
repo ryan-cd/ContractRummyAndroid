@@ -71,10 +71,17 @@ public class Deck{
             this.lastGameObjectHit = this.currentGameObjectHit;
             if (gameState == GameState.DRAWING)
             {
-                if (currentGameObjectHit.name == "DrawPile")
+                if (currentGameObjectHit.name == "DrawPile" && drawList.Count > 0)
                 {
                     playerList[playerTurn].drawCard(drawList[0]);
                     drawList.RemoveAt(0);
+                    gameState = GameState.DISCARDING;
+                }
+
+                if (currentGameObjectHit.name == "DiscardPile" && discardList.Count > 0)
+                {
+                    playerList[playerTurn].drawCard(discardList[discardList.Count - 1]);
+                    discardList.RemoveAt(discardList.Count - 1);
                     gameState = GameState.DISCARDING;
                 }
 
