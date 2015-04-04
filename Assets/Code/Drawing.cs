@@ -76,18 +76,9 @@ public class Drawing : MonoBehaviour {
     {
         for (int i = 0; i < 4; i++)
         {
-            //delete gameobjects that are no longer in use
-            for (int w = 13; w >= 0 && w > playerList[i].hand.Count-1; w--)
-            {
-                GameObject garbageObject = GameObject.Find("Player" + i + "Card" + w);
-                if (garbageObject != null)
-                {
-                    Destroy(garbageObject);
-                }
-            }
+            _flushHands(i);
 
             Vector3 tempTranslate = playerPositionList[i];
-            //Debug.Log("Player has: " + playerList[0].hand.Count + " cards");
             
             for (int j = 0; j < playerList[i].hand.Count; j++)
             {
@@ -122,7 +113,28 @@ public class Drawing : MonoBehaviour {
         }
     }
 
+    //delete gameobjects that are no longer in use by that player
+    private void _flushHands(int player)
+    {
+        for (int w = 13; w >= 0 && w > playerList[player].hand.Count - 1; w--)
+        {
+            GameObject garbageObject = GameObject.Find("Player" + player + "Card" + w);
+            if (garbageObject != null)
+            {
+                Destroy(garbageObject);
+            }
+        }
+    }
+
     private void _drawPiles()
+    {
+        _flushDrawPiles();
+        _drawDrawPile();
+        _drawDiscardPile();
+    }
+
+    //remove the pile graphic if it is empty
+    private void _flushDrawPiles()
     {
         if (discardList.Count == 0 && GameObject.Find("DiscardPile") != null)
         {
@@ -132,45 +144,6 @@ public class Drawing : MonoBehaviour {
         {
             Destroy(GameObject.Find("DrawPile"));
         }
-        _drawDrawPile();
-        _drawDiscardPile();
-        
-        /*for (int i = 0; i < 2; i++)
-        {
-            Vector3 translate = pilePositions[i];
-
-            GameObject go = null;
-            if (i == 0)
-                go = GameObject.Find("DrawPile");
-            else if (i == 1)
-                go = GameObject.Find("DiscardPile");
-
-            if (go == null && drawList.Count > 0)
-            {
-                if (i == 0)
-                    go = new GameObject("DrawPile");
-                else if (i == 1)
-                    go = new GameObject("DiscardPile");
-                go.AddComponent<SpriteRenderer>();
-                go.AddComponent<BoxCollider>();
-                go.GetComponent<Transform>().localScale = new Vector3(0.7f, 0.7f, 1f);
-                Vector2 boxColliderSize = new Vector2(1.4f, 1.9f);
-                go.GetComponent<BoxCollider>().size = boxColliderSize;
-            }
-            
-            go.transform.position = translate;
-            if(i == 0)
-                go.GetComponent<SpriteRenderer>().sprite = cardSprites[52]; //card backs start at index 52
-            else if (i == 1)
-            {
-                if (lastDiscardedCard == null)
-                    break;
-                else
-                    go.GetComponent<SpriteRenderer>().sprite = cardSprites[lastDiscardedCard.spriteNumber];
-            }
-
-        }*/
-        
     }
 
     private void _drawDrawPile()

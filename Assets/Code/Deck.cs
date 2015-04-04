@@ -59,49 +59,60 @@ public class Deck{
 
     public void handleInput(GameObject input)
     {
-
-        //if (input != null)
-            //Debug.Log("name: "+ input.name + " sprite: "+ input.GetComponent<SpriteRenderer>().sprite);
-        
         this.currentGameObjectHit = input;
         
         if (this.currentGameObjectHit != this.lastGameObjectHit)
         {
-
+            if (input != null)
+                Debug.Log("name: "+ input.name + " sprite: "+ input.GetComponent<SpriteRenderer>().sprite);
+        
             this.lastGameObjectHit = this.currentGameObjectHit;
             if (gameState == GameState.DRAWING)
             {
-                if (currentGameObjectHit.name == "DrawPile" && drawList.Count > 0)
-                {
-                    playerList[playerTurn].drawCard(drawList[0]);
-                    drawList.RemoveAt(0);
-                    gameState = GameState.DISCARDING;
-                }
-
-                if (currentGameObjectHit.name == "DiscardPile" && discardList.Count > 0)
-                {
-                    playerList[playerTurn].drawCard(discardList[discardList.Count - 1]);
-                    discardList.RemoveAt(discardList.Count - 1);
-                    gameState = GameState.DISCARDING;
-                }
-
+                _handleDraw(this.currentGameObjectHit);
                 return;
             }
 
             if (gameState == GameState.DISCARDING)
             {
-                string cardNumberString = currentGameObjectHit.name.Substring(11);
-                //int cardNumber = int.Parse(currentGameObjectHit.name.Substring(11));
-                int cardNumber = int.Parse(cardNumberString);
-                Debug.Log(currentGameObjectHit.name.Substring(11)+" "+cardNumber);
-                if (currentGameObjectHit.name.Substring(0,11) == "Player0Card")
-                {
-                    discardList.Add(playerList[playerTurn].hand[cardNumber]);
-                    playerList[playerTurn].discardCard(cardNumber);
-                    
-                    gameState = GameState.DRAWING;
-                }
+                _handleDiscard(this.currentGameObjectHit);
+                return;
             }
+        }
+    }
+
+    /*
+     * INPUT HANDLING
+     * ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     * */
+    private void _handleDraw(GameObject currentGameObjectHit)
+    {
+        if (currentGameObjectHit.name == "DrawPile" && drawList.Count > 0)
+        {
+            playerList[playerTurn].drawCard(drawList[0]);
+            drawList.RemoveAt(0);
+            gameState = GameState.DISCARDING;
+        }
+
+        if (currentGameObjectHit.name == "DiscardPile" && discardList.Count > 0)
+        {
+            playerList[playerTurn].drawCard(discardList[discardList.Count - 1]);
+            discardList.RemoveAt(discardList.Count - 1);
+            gameState = GameState.DISCARDING;
+        }
+    }
+
+    private void _handleDiscard(GameObject currentGameObejectHit)
+    {
+        string cardNumberString = currentGameObjectHit.name.Substring(11);
+        int cardNumber = int.Parse(cardNumberString);
+
+        if (currentGameObjectHit.name.Substring(0, 11) == "Player0Card")
+        {
+            discardList.Add(playerList[playerTurn].hand[cardNumber]);
+            playerList[playerTurn].discardCard(cardNumber);
+
+            gameState = GameState.DRAWING;
         }
     }
 
@@ -185,6 +196,7 @@ public class Deck{
         
     }
 
+    
     /*
      * Getters
      * ~~~~~~~~~~~~~~~~~~~~~~~~~~
