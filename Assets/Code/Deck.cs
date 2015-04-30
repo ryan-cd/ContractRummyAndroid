@@ -8,6 +8,10 @@ public class Deck{
     public List<Card> drawList = new List<Card>();
     public List<Card> discardList = new List<Card>();
     public List<Player> playerList = new List<Player>();
+	private enum SORTS
+	{
+		VALUE, SUIT
+	};
     public const int handSize = 13;
     public const int numPlayers = 4;
     private int playerTurn = 0;
@@ -89,9 +93,13 @@ public class Deck{
     {
         if (currentGameObjectHit.name == "DrawPile" && drawList.Count > 0)
         {
-            playerList[playerTurn].drawCard(drawList[0]);
+            /*playerList[playerTurn].drawCard(drawList[0]);
             drawList.RemoveAt(0);
-            gameState = GameState.DISCARDING;
+            gameState = GameState.DISCARDING;*/
+			_sortHand(0, SORTS.VALUE);
+            _sortHand(1, SORTS.VALUE);
+            _sortHand(2, SORTS.VALUE);
+            _sortHand(3, SORTS.VALUE);
         }
 
         if (currentGameObjectHit.name == "DiscardPile" && discardList.Count > 0)
@@ -100,6 +108,8 @@ public class Deck{
             discardList.RemoveAt(discardList.Count - 1);
             gameState = GameState.DISCARDING;
         }
+
+		//_sortHand(0, SORTS.VALUE);
     }
 
     private void _handleDiscard(GameObject currentGameObejectHit)
@@ -130,15 +140,15 @@ public class Deck{
                 Card card = new Card();
                 card.setSuit(suit);
                 card.setValue(j);
-                card.setSpriteNumber(4 * j + (int)suit - 8);
-                //card.calculateSpriteNumber();
+                card.calculateSpriteNumber();
                 deck.Add(card);
             }
         }
 
         for (int i = 52; i <= 103; i++ )
         {
-            deck.Add(deck[i - 52]);
+            Card card = new Card(deck[i - 52]);
+            deck.Add(card);
         }
 
         _shuffleDeck();
@@ -196,10 +206,38 @@ public class Deck{
         
     }
 
-    
-    /*
-     * Getters
-     * ~~~~~~~~~~~~~~~~~~~~~~~~~~
-     * */
+	private void _sortHand(int player, SORTS sortType)
+	{
+		if(playerList[player].hand.Count < 1)
+			return;
+
+		Card compareCard = new Card();
+
+		List<Card> originalHand = playerList[player].hand; 
+		List<Card> newHand = new List<Card>();
+
+		if(sortType == SORTS.VALUE)
+		{
+			int lowestCardIndex = 0;
+			while(originalHand.Count > 0)
+            {
+                compareCard.setValue(14);
+				for (int i = 0; i < originalHand.Count; i++)
+				{
+					Card card = originalHand[i];
+					
+                    if(card.value <= compareCard.value)
+					{
+						compareCard = card;
+						lowestCardIndex = i;
+					}
+				}
+
+				newHand.Add(originalHand[lowestCardIndex]);
+				originalHand.RemoveAt(lowestCardIndex);
+			}
+		}
+		playerList[player].hand = newHand;
+	}
     
 }

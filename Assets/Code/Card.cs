@@ -11,7 +11,18 @@ public class Card {
     public int value { get; private set; }
     public int points { get; private set; }
     public int spriteNumber { get; private set; }
-    
+
+    public Card()
+    {
+    }
+
+    public Card(Card card)
+    {
+        this.value = card.value;
+        this.points = card.points;
+        this.spriteNumber = card.spriteNumber;
+    }
+
 	// Use this for initialization
 	void Start () {
         
@@ -26,7 +37,18 @@ public class Card {
     {
         this.suit = newSuit;
     }
-    
+
+    /*
+     * GETTERS
+     * */
+    public void print()
+    {
+        Debug.Log(this.value +":"+ this.suit);
+    }
+
+    /*
+     * SETTERS
+     * */
     public void setValue(int newValue)
     {
         if (2 <= newValue && newValue <= 14)
