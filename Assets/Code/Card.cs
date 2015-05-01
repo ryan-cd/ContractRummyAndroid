@@ -19,6 +19,7 @@ public class Card {
     public Card(Card card)
     {
         this.value = card.value;
+        this.suit = card.suit;
         this.points = card.points;
         this.spriteNumber = card.spriteNumber;
     }

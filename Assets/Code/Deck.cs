@@ -145,7 +145,7 @@ public class Deck{
             }
         }
 
-        for (int i = 52; i <= 103; i++ )
+        for (int i = 52; i <= 103; i++)
         {
             Card card = new Card(deck[i - 52]);
             deck.Add(card);
@@ -160,9 +160,9 @@ public class Deck{
         for (int i = 0; i < 104; i++)
         {
 
-            Card temp = deck[i];
+            Card temp = new Card(deck[i]);
             randomIndex = Random.Range(i, deck.Count);
-            deck[i] = deck[randomIndex];
+            deck[i] = new Card(deck[randomIndex]);
             deck[randomIndex] = temp;
         }
     }
@@ -226,7 +226,8 @@ public class Deck{
 				{
 					Card card = originalHand[i];
 					
-                    if(card.value <= compareCard.value)
+                    if(card.value < compareCard.value
+                        || (card.value == compareCard.value && (int)card.suit <= (int)compareCard.suit))
 					{
 						compareCard = card;
 						lowestCardIndex = i;
