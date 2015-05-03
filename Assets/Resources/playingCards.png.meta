@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: 74d5b34b9f9afc34ba8812e3fb27a16d
-timeCreated: 1430500344
+timeCreated: 1430615516
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
@@ -299,7 +299,7 @@ TextureImporter:
     - name: 5D
       rect:
         serializedVersion: 2
-        x: 563
+        x: 560
         y: 644
         width: 140
         height: 190
@@ -330,7 +330,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 980
-        y: 641
+        y: 644
         width: 140
         height: 190
       alignment: 0
@@ -359,7 +359,7 @@ TextureImporter:
     - name: 10S
       rect:
         serializedVersion: 2
-        x: 1397
+        x: 1400
         y: 644
         width: 140
         height: 190

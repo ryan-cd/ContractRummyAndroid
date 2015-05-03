@@ -42,9 +42,9 @@ public class Card {
     /*
      * GETTERS
      * */
-    public void print()
+    public override string ToString()
     {
-        Debug.Log(this.value +":"+ this.suit);
+        return this.value +":"+ this.suit;
     }
 
     /*
