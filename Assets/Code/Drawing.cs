@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
 using System.Collections.Generic;
 using System;
@@ -45,6 +46,20 @@ public class Drawing : MonoBehaviour {
 
         pilePositions.Add(drawPilePosition);
         pilePositions.Add(discardPilePosition);
+        
+        GameObject btn = (GameObject)Instantiate(Resources.Load("Button"), new Vector3(0,0,0), Quaternion.identity);
+        //var rectTransform = btn.GetComponent<RectTransform>();
+        //rectTransform.SetParent(Canvas.transform);
+        //btn.transform.parent = GameObject.Find("Canvas").transform;
+        btn.transform.SetParent(GameObject.Find("Canvas").transform, false);
+        Button b = btn.GetComponent<Button>();
+        b.onClick.AddListener(() => hello());
+        
+    }
+    
+    public void hello()
+    {
+        Debug.Log("Hello");
     }
 
 	// Use this for initialization
