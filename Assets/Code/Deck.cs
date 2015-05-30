@@ -261,7 +261,7 @@ public class Deck{
 
                 if (card.value <= compareCard.value)
                 {
-                    compareCard = card;
+                    compareCard.set(card);
                     lowestCardIndex = i;
                 }
             }
@@ -301,7 +301,6 @@ public class Deck{
                     newHand.Add(new Card(originalHand[i]));
                 }
             }
-            Debug.Log(cardsOfSuit[(int)suit]);
         }
 
         List<Card> tempHand = new List<Card>();

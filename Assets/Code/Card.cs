@@ -18,10 +18,7 @@ public class Card {
 
     public Card(Card card)
     {
-        this.value = card.value;
-        this.suit = card.suit;
-        this.points = card.points;
-        this.spriteNumber = card.spriteNumber;
+        set(card);
     }
 
 	// Use this for initialization
@@ -34,10 +31,7 @@ public class Card {
         
 	}
 
-    public void setSuit(SUITS newSuit)
-    {
-        this.suit = newSuit;
-    }
+    
 
     /*
      * GETTERS
@@ -50,6 +44,19 @@ public class Card {
     /*
      * SETTERS
      * */
+    public void set(Card newCard)
+    {
+        this.value = newCard.value;
+        this.suit = newCard.suit;
+        this.points = newCard.points;
+        this.spriteNumber = newCard.spriteNumber;
+    }
+
+    public void setSuit(SUITS newSuit)
+    {
+        this.suit = newSuit;
+    }
+
     public void setValue(int newValue)
     {
         if (2 <= newValue && newValue <= 14)
