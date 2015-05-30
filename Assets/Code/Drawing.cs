@@ -6,21 +6,11 @@ using System;
 
 [Serializable]
 public class Drawing : MonoBehaviour {
-    /*public struct handParameters
-    {
-        public Vector3 translate;
-        public int deltaX;
-        public int deltaY;
-        public int deltaZ;
-    };
-
-    public List<handParameters> handParametersList = new List<handParameters>();
-    public handParameters player1Parameters = new handParameters();*/
     private Vector3 player1Position = new Vector3(-4, -4, 20);
     private Vector3 player2Position = new Vector3(-7, 4, 20);
     private Vector3 player3Position = new Vector3(-4, 4, 20);
     private Vector3 player4Position = new Vector3(7, 4, 20);
-    public float cardOffset = 0.7f;
+    public float cardOffset = 0.65f;
     public List<Vector3> playerPositionList = new List<Vector3>();
     private Vector3 drawPilePosition = new Vector3(-1, 0, 20);
     private Vector3 discardPilePosition = new Vector3(1, 0, 20);
@@ -34,7 +24,12 @@ public class Drawing : MonoBehaviour {
 
     public Card lastDiscardedCard = null;
 
-    private bool firstDraw = true;
+    private ButtonWrapper sortSuitButton;
+    private ButtonWrapper sortValueButton;
+    public static string sortSuitButtonName = "Sort By Suit"; //this is directly referenced by Deck
+    public static string sortValueButtonName = "Sort By Value"; //this is directly referenced by Deck
+    public static Vector3 sortSuitButtonPosition = new Vector3(300, -200, 10);
+    public static Vector3 sortValueButtonPosition = new Vector3(300, -230, 10);
     
     void Awake()
     {
@@ -47,17 +42,26 @@ public class Drawing : MonoBehaviour {
         pilePositions.Add(drawPilePosition);
         pilePositions.Add(discardPilePosition);
         
-        GameObject btn = (GameObject)Instantiate(Resources.Load("Button"), new Vector3(0,0,0), Quaternion.identity);
-        //var rectTransform = btn.GetComponent<RectTransform>();
-        //rectTransform.SetParent(Canvas.transform);
-        //btn.transform.parent = GameObject.Find("Canvas").transform;
-        btn.transform.SetParent(GameObject.Find("Canvas").transform, false);
-        Button b = btn.GetComponent<Button>();
-        b.onClick.AddListener(() => hello());
+        sortSuitButton = gameObject.AddComponent<ButtonWrapper>();
+        sortValueButton = gameObject.AddComponent<ButtonWrapper>();
+        sortSuitButton.construct(
+            "Button", 
+            sortSuitButtonPosition, 
+            Quaternion.identity, 
+            sortSuitButtonName, 
+            ()=>Inputs.setLastButtonHit(sortSuitButton)
+        );
+        sortValueButton.construct(
+            "Button", 
+            sortValueButtonPosition, 
+            Quaternion.identity, 
+            sortValueButtonName,
+            ()=>Inputs.setLastButtonHit(sortValueButton)
+        );
         
     }
     
-    public void hello()
+    public static void hello()
     {
         Debug.Log("Hello");
     }
@@ -178,10 +182,7 @@ public class Drawing : MonoBehaviour {
             go.GetComponent<BoxCollider>().size = boxColliderSize;
             go.transform.position = translate;
             go.GetComponent<SpriteRenderer>().sprite = cardSprites[52]; //card backs start at index 52
-        
         }
-        
-        
     }
 
     private void _drawDiscardPile()
@@ -207,10 +208,7 @@ public class Drawing : MonoBehaviour {
                 return;
             else
                 go.GetComponent<SpriteRenderer>().sprite = cardSprites[lastDiscardedCard.spriteNumber];
-        
         }
-
-        
     }
 
 }

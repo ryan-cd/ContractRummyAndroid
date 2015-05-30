@@ -17,6 +17,8 @@ public class Deck{
     private int playerTurn = 0;
     public GameObject lastGameObjectHit = null;
     public GameObject currentGameObjectHit = null;
+    public ButtonWrapper lastButtonHit = null;
+    public ButtonWrapper currentButtonHit = null;
 
     private enum GameState
     {
@@ -61,15 +63,21 @@ public class Deck{
         gameState = GameState.DRAWING;
     }
 
-    public void handleInput(GameObject input)
+    public void handleInput(GameObject gameObject, ButtonWrapper button)
+    {
+        _handleInputGameObject(gameObject);
+        _handleInputButton(button);
+    }
+
+    private void _handleInputGameObject(GameObject input)
     {
         this.currentGameObjectHit = input;
-        
+
         if (this.currentGameObjectHit != this.lastGameObjectHit)
         {
             if (input != null)
-                Debug.Log("name: "+ input.name + " sprite: "+ input.GetComponent<SpriteRenderer>().sprite);
-        
+                Debug.Log("Card: " + input.name + " Sprite: " + input.GetComponent<SpriteRenderer>().sprite);
+
             this.lastGameObjectHit = this.currentGameObjectHit;
             if (gameState == GameState.DRAWING)
             {
@@ -85,6 +93,27 @@ public class Deck{
         }
     }
 
+    private void _handleInputButton(ButtonWrapper input)
+    {
+        this.currentButtonHit = input;
+
+        if (this.currentButtonHit != this.lastButtonHit && input != null)
+        {
+            this.lastButtonHit = input;
+            Debug.Log("Button Clicked: " + input.getText());
+
+            if (input.getText() == Drawing.sortSuitButtonName)
+            {
+                _sortHand(0, SORTS.SUIT);
+            }
+
+            else if (input.getText() == Drawing.sortValueButtonName)
+            {
+                _sortHand(0, SORTS.VALUE);
+            }
+        }
+    }
+
     /*
      * INPUT HANDLING
      * ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -93,13 +122,13 @@ public class Deck{
     {
         if (currentGameObjectHit.name == "DrawPile" && drawList.Count > 0)
         {
-            /*playerList[playerTurn].drawCard(drawList[0]);
+            playerList[playerTurn].drawCard(drawList[0]);
             drawList.RemoveAt(0);
-            gameState = GameState.DISCARDING;*/
-			_sortHand(0, SORTS.SUIT);
+            gameState = GameState.DISCARDING;
+			/*_sortHand(0, SORTS.SUIT);
             _sortHand(1, SORTS.VALUE);
             _sortHand(2, SORTS.VALUE);
-            _sortHand(3, SORTS.VALUE);
+            _sortHand(3, SORTS.VALUE);*/
         }
 
         if (currentGameObjectHit.name == "DiscardPile" && discardList.Count > 0)
