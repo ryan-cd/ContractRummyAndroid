@@ -6,7 +6,6 @@ public class Player {
     public List<Card> hand = new List<Card>();
     public int contractNumber = 1;
     public int score = 0;
-    public bool hasContract {get; private set;}
     
     //Constructor
     public Player(List<Card> hand)
@@ -27,6 +26,11 @@ public class Player {
 	
 	}
 
+    /*
+     * GETTERS
+     * 
+     * */
+
     public void printHand()
     {
         Debug.Log("\nplayer has " + hand.Count + " cards");
@@ -35,6 +39,22 @@ public class Player {
             Debug.Log(i + " " + hand[i].suit + " " + hand[i].value + "\n");
         }
     }
+
+    public void sortByValue()
+    {
+        hand = Algorithms.sortByValue(hand);
+    }
+
+    public void sortBySuit()
+    {
+        hand = Algorithms.sortBySuit(hand);
+    }
+
+    public bool hasContract()
+    {
+        return Algorithms.hasContract(hand, contractNumber);
+    }
+
 
     /*
      * MUTATORS
@@ -45,6 +65,7 @@ public class Player {
     {
         newCard.setLocationTag(Card.LOCATIONTAGS.DRAWN);
         hand.Add(newCard);
+        Debug.Log(Algorithms.hasContract(hand, contractNumber));
     }
 
     public void discardCard(int index)
@@ -56,33 +77,5 @@ public class Player {
         }
     }
 
-    public void checkIfContractComplete()
-    {
-        switch(contractNumber)
-        {
-            case 1:
-                
-                break;
-            case 2:
-
-                break;
-            case 3:
-
-                break;
-            case 4:
-
-                break;
-            case 5:
-
-                break;
-            case 6:
-
-                break;
-            case 7:
-
-                break;
-            default:
-                throw new UnityException("A player has reached an illegal contract number");
-        }
-    }
+    
 }

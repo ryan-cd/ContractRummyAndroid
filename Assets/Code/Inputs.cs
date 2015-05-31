@@ -18,7 +18,6 @@ public class Inputs : MonoBehaviour {
             RaycastHit hit;
             if (Physics.Raycast(ray, out hit, Mathf.Infinity))
             {
-                //Debug.Log("hit "+hit.collider.gameObject.name+" "+hit.collider.gameObject.GetComponent<SpriteRenderer>().sprite.name);
                 lastGameObjectHit = hit.collider.gameObject;
             }
         }

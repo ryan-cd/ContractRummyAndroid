@@ -22,37 +22,11 @@ public class Deck{
 
     private enum GameState
     {
-        MENU, DEALING, CHECK, DRAWING, DISCARDING
+        MENU, DEALING, DRAWING, CHECK, CONTRACT, DISCARDING
     };
     private GameState gameState;
 
-    /*void Awake()
-    {
-        Debug.Log("Awake function reached");
-        gameState = GameState.DEALING;
-    }
-	// Use this for initialization
-	void Start () {
-
-	}
-	
-	// Update is called once per frame
-	void Update () {
-        //this function is never called since Deck doesnt implement MonoBehavior
-        if (gameState == GameState.DEALING)
-        {
-
-        }
-        else if (gameState == GameState.CHECK)
-        {
-            _checkHands();
-            gameState = GameState.TURN;
-        }
-        else if (gameState == GameState.TURN)
-        {
-            
-        }
-	}*/
+    
 
     public void initialize()
     {
@@ -63,10 +37,34 @@ public class Deck{
         gameState = GameState.DRAWING;
     }
 
+    /*
+     * INPUT HANDLING
+     * ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     * */
     public void handleInput(GameObject gameObject, ButtonWrapper button)
     {
         _handleInputGameObject(gameObject);
         _handleInputButton(button);
+
+        switch (gameState)
+        {
+            case GameState.MENU:
+                break;
+            case GameState.DEALING:
+                //TODO, redeal, but dont need to replace the players like initialize
+                break;
+            case GameState.DRAWING:
+                //this is handled above
+                break;
+            case GameState.CHECK:
+                break;
+            case GameState.CONTRACT:
+                break;
+            case GameState.DISCARDING:
+                //handled above
+                break;
+
+        }
     }
 
     private void _handleInputGameObject(GameObject input)
@@ -104,20 +102,17 @@ public class Deck{
 
             if (input.getText() == Drawing.sortSuitButtonName)
             {
-                _sortHand(0, SORTS.SUIT);
+                playerList[0].sortBySuit();
             }
 
             else if (input.getText() == Drawing.sortValueButtonName)
             {
-                _sortHand(0, SORTS.VALUE);
+                playerList[0].sortByValue();
             }
         }
     }
 
-    /*
-     * INPUT HANDLING
-     * ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-     * */
+    
     private void _handleDraw(GameObject currentGameObjectHit)
     {
         if (currentGameObjectHit.name == "DrawPile" && drawList.Count > 0)
@@ -131,14 +126,12 @@ public class Deck{
             _sortHand(3, SORTS.VALUE);*/
         }
 
-        if (currentGameObjectHit.name == "DiscardPile" && discardList.Count > 0)
+        else if (currentGameObjectHit.name == "DiscardPile" && discardList.Count > 0)
         {
             playerList[playerTurn].drawCard(discardList[discardList.Count - 1]);
             discardList.RemoveAt(discardList.Count - 1);
             gameState = GameState.DISCARDING;
         }
-
-		//_sortHand(0, SORTS.VALUE);
     }
 
     private void _handleDiscard(GameObject currentGameObejectHit)
@@ -221,96 +214,4 @@ public class Deck{
         drawList = deck;
     }
 
-    private void _checkHands()
-    {
-        
-    }
-
-	private void _sortHand(int player, SORTS sortType)
-	{
-		if(playerList[player].hand.Count < 1)
-			return;
-
-		List<Card> originalHand = playerList[player].hand; 
-		List<Card> newHand = new List<Card>();
-
-		if(sortType == SORTS.VALUE)
-		{
-            newHand = _sortByValue(originalHand);
-		}
-
-        if (sortType == SORTS.SUIT)
-        {
-            newHand = _sortBySuit(originalHand);
-        }
-
-		playerList[player].hand = newHand;
-	}
-
-    private List<Card> _sortByValue(List<Card> originalHand)
-    {
-        List<Card> newHand = new List<Card>();
-        Card compareCard = new Card();
-        int lowestCardIndex = 0;
-        while (originalHand.Count > 0)
-        {
-            compareCard.setValue(14);
-            for (int i = 0; i < originalHand.Count; i++)
-            {
-                Card card = originalHand[i];
-
-                if (card.value <= compareCard.value)
-                {
-                    compareCard.set(card);
-                    lowestCardIndex = i;
-                }
-            }
-
-            newHand.Add(originalHand[lowestCardIndex]);
-            originalHand.RemoveAt(lowestCardIndex);
-        }
-        return newHand;
-    }
-
-    //Returns a list of only the specified portion sorted
-    private List<Card> _sortByValue(List<Card> originalHand, int startIndex, int endIndex)
-    {
-        int originalHandLength = originalHand.Count;
-        List<Card> newHand = new List<Card>();
-        newHand.AddRange(originalHand);
-
-        newHand.RemoveRange(endIndex, originalHand.Count - endIndex);
-        newHand.RemoveRange(0, startIndex);
-
-        newHand = _sortByValue(newHand);
-        return newHand;
-    }
-
-    private List<Card> _sortBySuit(List<Card> originalHand)
-    {
-        List<Card> newHand = new List<Card>();
-        int[] cardsOfSuit = {0, 0, 0, 0};
-        //set the cards to be grouped together by suit
-        foreach (Card.SUITS suit in System.Enum.GetValues(typeof(Card.SUITS)))
-        {
-            for (int i = 0; i < originalHand.Count; i++)
-            {
-                if (originalHand[i].suit == suit)
-                {
-                    cardsOfSuit[(int)suit] += 1;
-                    newHand.Add(new Card(originalHand[i]));
-                }
-            }
-        }
-
-        List<Card> tempHand = new List<Card>();
-        //sort each suit section by value
-        tempHand.AddRange(_sortByValue(newHand, 0, cardsOfSuit[0]));
-        tempHand.AddRange(_sortByValue(newHand, cardsOfSuit[0], (cardsOfSuit[0]+cardsOfSuit[1])));
-        tempHand.AddRange(_sortByValue(newHand, cardsOfSuit[0]+cardsOfSuit[1], (cardsOfSuit[0]+cardsOfSuit[1]+cardsOfSuit[2])));
-        tempHand.AddRange(_sortByValue(newHand, cardsOfSuit[0]+cardsOfSuit[1]+cardsOfSuit[2], (cardsOfSuit[0]+cardsOfSuit[1]+cardsOfSuit[2]+cardsOfSuit[3])));
-        newHand = tempHand;
-
-        return newHand;
-    }
 }
