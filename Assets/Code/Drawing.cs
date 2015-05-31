@@ -26,10 +26,13 @@ public class Drawing : MonoBehaviour {
 
     private ButtonWrapper sortSuitButton;
     private ButtonWrapper sortValueButton;
-    public static string sortSuitButtonName = "Sort By Suit"; //this is directly referenced by Deck
-    public static string sortValueButtonName = "Sort By Value"; //this is directly referenced by Deck
+    private ButtonWrapper contractButton;
+    public static string sortSuitButtonName = "Sort By Suit"; //this object is directly referenced by Deck
+    public static string sortValueButtonName = "Sort By Value"; //this object is directly referenced by Deck
+    public static string contractButtonName = "Place Contract"; //this object is directly referenced by Deck
     public static Vector3 sortSuitButtonPosition = new Vector3(300, -200, 10);
     public static Vector3 sortValueButtonPosition = new Vector3(300, -230, 10);
+    public static Vector3 contractButtonPosition = new Vector3(-290, -200, 10);
     
     void Awake()
     {
@@ -44,6 +47,7 @@ public class Drawing : MonoBehaviour {
         
         sortSuitButton = gameObject.AddComponent<ButtonWrapper>();
         sortValueButton = gameObject.AddComponent<ButtonWrapper>();
+        contractButton = gameObject.AddComponent<ButtonWrapper>();
         sortSuitButton.construct(
             "Button", 
             sortSuitButtonPosition, 
@@ -58,7 +62,13 @@ public class Drawing : MonoBehaviour {
             sortValueButtonName,
             ()=>Inputs.setLastButtonHit(sortValueButton)
         );
-        
+        contractButton.construct(
+            "Button",
+            contractButtonPosition,
+            Quaternion.identity,
+            contractButtonName,
+            () => Inputs.setLastButtonHit(contractButton)
+        );
     }
     
     public static void hello()

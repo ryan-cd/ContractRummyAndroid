@@ -43,8 +43,11 @@ public class Deck{
      * */
     public void handleInput(GameObject gameObject, ButtonWrapper button)
     {
-        _handleInputGameObject(gameObject);
-        _handleInputButton(button);
+        if (gameState == GameState.DRAWING || gameState == GameState.DISCARDING)
+        {
+            _handleInputGameObject(gameObject);
+            _handleInputButton(button);
+        }
 
         switch (gameState)
         {
@@ -57,8 +60,11 @@ public class Deck{
                 //this is handled above
                 break;
             case GameState.CHECK:
+                gameState = GameState.DISCARDING;
+                //checkContracts(); //will set the next state to either CONTRACT or DISCARDING
                 break;
             case GameState.CONTRACT:
+                gameState = GameState.DISCARDING;
                 break;
             case GameState.DISCARDING:
                 //handled above
@@ -119,18 +125,14 @@ public class Deck{
         {
             playerList[playerTurn].drawCard(drawList[0]);
             drawList.RemoveAt(0);
-            gameState = GameState.DISCARDING;
-			/*_sortHand(0, SORTS.SUIT);
-            _sortHand(1, SORTS.VALUE);
-            _sortHand(2, SORTS.VALUE);
-            _sortHand(3, SORTS.VALUE);*/
+            gameState = GameState.CONTRACT;
         }
 
         else if (currentGameObjectHit.name == "DiscardPile" && discardList.Count > 0)
         {
             playerList[playerTurn].drawCard(discardList[discardList.Count - 1]);
             discardList.RemoveAt(discardList.Count - 1);
-            gameState = GameState.DISCARDING;
+            gameState = GameState.CONTRACT;
         }
     }
 
@@ -146,6 +148,16 @@ public class Deck{
 
             gameState = GameState.DRAWING;
         }
+    }
+
+    private void checkContracts()
+    {
+        if (playerList[0].hasContract())
+        {
+            gameState = GameState.CONTRACT;
+        }
+        else
+            gameState = GameState.DISCARDING;
     }
 
     /*
