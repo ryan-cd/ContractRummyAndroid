@@ -40,6 +40,18 @@ public class Player {
         }
     }
 
+    public int getPoints()
+    {
+        int points = 0;
+
+        for (int i = 0; i < hand.Count; i++)
+        {
+            points += hand[i].points;
+        }
+
+        return points;
+    }
+
     public void sortByValue()
     {
         hand = Algorithms.sortByValue(hand);

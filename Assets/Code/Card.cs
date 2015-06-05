@@ -35,7 +35,7 @@ public class Card {
 
     /*
      * GETTERS
-     * */
+     * */    
     public override string ToString()
     {
         return this.value +":"+ this.suit;
@@ -57,6 +57,7 @@ public class Card {
         this.suit = newSuit;
     }
 
+    //This function sets the internal value and points of the card
     public void setValue(int newValue)
     {
         if (2 <= newValue && newValue <= 14)
@@ -66,7 +67,8 @@ public class Card {
         }
         else
             throw new UnityException("ERROR: card set to illegal value");
-        
+
+        _setPoints(this.value);
     }
 
     public void setLocationTag(LOCATIONTAGS newLocationTag)
