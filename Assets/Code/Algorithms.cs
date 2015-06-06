@@ -110,7 +110,7 @@ public class Algorithms {
 
         for (int i = 0; i < sortedCards.Count - 1; i++)
         {
-            Debug.Log(sortedCards[i].ToString());
+            //Debug.Log(sortedCards[i].ToString());
             if (sortedCards[i + 1].value == sortedCards[i].value)
             {
                 lengthOfCurrentSet++;

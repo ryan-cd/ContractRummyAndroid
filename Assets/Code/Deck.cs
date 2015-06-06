@@ -43,7 +43,9 @@ public class Deck{
      * */
     public void handleInput(GameObject gameObject, ButtonWrapper button)
     {
-        if (gameState == GameState.DRAWING || gameState == GameState.DISCARDING)
+        if (gameState == GameState.DRAWING 
+            || gameState == GameState.CONTRACT 
+            || gameState == GameState.DISCARDING)
         {
             _handleInputGameObject(gameObject);
             _handleInputButton(button);
@@ -60,11 +62,11 @@ public class Deck{
                 //this is handled above
                 break;
             case GameState.CHECK:
-                gameState = GameState.DISCARDING;
-                //checkContracts(); //will set the next state to either CONTRACT or DISCARDING
+                //gameState = GameState.DISCARDING;
+                checkContracts(); //will set the next state to either CONTRACT or DISCARDING
                 break;
             case GameState.CONTRACT:
-                gameState = GameState.DISCARDING;
+                //this is handled above
                 break;
             case GameState.DISCARDING:
                 //handled above
@@ -89,7 +91,7 @@ public class Deck{
                 return;
             }
 
-            if (gameState == GameState.DISCARDING)
+            if (gameState == GameState.DISCARDING || gameState == GameState.CONTRACT)
             {
                 _handleDiscard(this.currentGameObjectHit);
                 return;
@@ -115,6 +117,17 @@ public class Deck{
             {
                 playerList[0].sortByValue();
             }
+
+            else if (input.getText() == Drawing.contractButtonName)
+            {
+                if (playerList[0].hasContract() && gameState == GameState.CONTRACT)
+                {
+                    //TODO: Add method that allows player to put down their contract
+                    Debug.Log("Ok to place contract");
+                }
+
+                gameState = GameState.DISCARDING;
+            }
         }
     }
 
@@ -125,14 +138,14 @@ public class Deck{
         {
             playerList[playerTurn].drawCard(drawList[0]);
             drawList.RemoveAt(0);
-            gameState = GameState.CONTRACT;
+            gameState = GameState.CHECK;
         }
 
         else if (currentGameObjectHit.name == "DiscardPile" && discardList.Count > 0)
         {
             playerList[playerTurn].drawCard(discardList[discardList.Count - 1]);
             discardList.RemoveAt(discardList.Count - 1);
-            gameState = GameState.CONTRACT;
+            gameState = GameState.CHECK;
         }
     }
 
@@ -154,6 +167,7 @@ public class Deck{
     {
         if (playerList[0].hasContract())
         {
+            Debug.Log("Player has contract");
             gameState = GameState.CONTRACT;
         }
         else
