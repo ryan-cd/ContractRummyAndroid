@@ -122,8 +122,7 @@ public class Deck{
             {
                 if (playerList[0].hasContract() && gameState == GameState.CONTRACT)
                 {
-                    //TODO: Add method that allows player to put down their contract
-                    Debug.Log("Ok to place contract");
+                    _handlePlaceContract();
                 }
 
                 gameState = GameState.DISCARDING;
@@ -160,6 +159,56 @@ public class Deck{
             playerList[playerTurn].discardCard(cardNumber);
 
             gameState = GameState.DRAWING;
+        }
+    }
+
+    private void _handlePlaceContract()
+    {
+        Debug.Log("Handling contract placement");
+        switch(playerList[0].contractNumber)
+        {
+            case 1:
+                _handlePlaceSet(2);
+                break;
+            case 2:
+                _handlePlaceSet(1);
+                _handlePlaceRun(4);
+                break;
+            case 3:
+                _handlePlaceSet(2, 4);
+                break;
+            case 4:
+                _handlePlaceRun(2);
+                break;
+            case 5:
+                _handlePlaceSet(1, 4);
+                _handlePlaceRun(1);
+                break;
+            case 6:
+                _handlePlaceSet(3);
+                break;
+            case 7:
+                _handlePlaceSet(1);
+                _handlePlaceRun(1, 7);
+                break;
+            default:
+                throw new UnityException("Trying to place unimplemented contract");
+        }
+    }
+
+    private void _handlePlaceSet(int numberOfSets, int setLength = 3)
+    {
+        for(int i = 0; i < numberOfSets; i++)
+        {
+            //TODO: Implement
+        }
+    }
+
+    private void _handlePlaceRun(int numberOfRuns, int runLength = 3)
+    {
+        for (int i = 0; i < numberOfRuns; i++)
+        {
+            //TODO: Implement
         }
     }
 
@@ -207,7 +256,6 @@ public class Deck{
         int randomIndex;
         for (int i = 0; i < 104; i++)
         {
-
             Card temp = new Card(deck[i]);
             randomIndex = Random.Range(i, deck.Count);
             deck[i] = new Card(deck[randomIndex]);
