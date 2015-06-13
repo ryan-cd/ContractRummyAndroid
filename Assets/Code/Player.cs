@@ -33,11 +33,13 @@ public class Player {
 
     public void printHand()
     {
-        Debug.Log("\nplayer has " + hand.Count + " cards");
+        string result = "Player has " + hand.Count + " cards: ";
+        
         for (int i = 0; i < hand.Count; i++)
         {
-            Debug.Log(i + " " + hand[i].suit + " " + hand[i].value + "\n");
+            result += ("" + i + "[" + hand[i].suit + " " + hand[i].value + "]");
         }
+        Debug.Log(result);
     }
 
     public int getPoints()
