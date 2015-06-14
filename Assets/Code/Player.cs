@@ -3,7 +3,9 @@ using System.Collections;
 using System.Collections.Generic;
 
 public class Player {
-    public List<Card> hand = new List<Card>();
+    public List<Card> hand {get; private set;}
+    public List<List<Card>> sets {get; private set;}
+    public List<List<Card>> runs {get; private set;}
     public int contractNumber = 1;
     public int score = 0;
     
@@ -91,5 +93,20 @@ public class Player {
         }
     }
 
+    //Contract
+    public void addSet(List<Card> newSet)
+    {
+        if(newSet.Count < 3 || newSet.Count > 8)
+            throw new UnityException("Invalid set added to player");
+        
+        sets.Add(newSet);
+    }
     
+    public void addRun(List<Card> newRun)
+    {
+        if(newRun.Count < 4 || newRun.Count > 10)
+            throw new UnityException("Invalid run added to player");
+        
+        runs.Add(newRun);
+    }
 }

@@ -22,7 +22,7 @@ public class Deck{
 
     private enum GameState
     {
-        MENU, DEALING, DRAWING, CHECK, CONTRACT, DISCARDING
+        MENU, DEALING, DRAWING, CHECK, CONTRACT, PLACE_SET, PLACE_RUN, DISCARDING
     };
     private GameState gameState;
 
@@ -45,6 +45,8 @@ public class Deck{
     {
         if (gameState == GameState.DRAWING 
             || gameState == GameState.CONTRACT 
+            || gameState == GameState.PLACE_SET
+            || gameState == GameState.PLACE_RUN
             || gameState == GameState.DISCARDING)
         {
             _handleInputGameObject(gameObject);
@@ -62,11 +64,16 @@ public class Deck{
                 //this is handled above
                 break;
             case GameState.CHECK:
-                //gameState = GameState.DISCARDING;
                 checkContracts(); //will set the next state to either CONTRACT or DISCARDING
                 break;
             case GameState.CONTRACT:
                 //this is handled above
+                break;
+            case GameState.PLACE_SET:
+                gameState = GameState.DISCARDING;
+                break;
+            case GameState.PLACE_RUN:
+                gameState = GameState.DISCARDING;
                 break;
             case GameState.DISCARDING:
                 //handled above
