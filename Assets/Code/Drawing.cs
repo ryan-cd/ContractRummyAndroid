@@ -123,12 +123,15 @@ public class Drawing : MonoBehaviour {
                     go.GetComponent<BoxCollider>().size = boxColliderSize;
                 }
 
-                if (playerList[i].hand[j].locationTag == Card.LOCATIONTAGS.DRAWN
-                    && j == playerList[i].hand.Count-1)
+                if (playerList[i].hand[j].locationTag == Card.LOCATIONTAGS.DRAWN)
                 {
                     tempTranslate.y += cardOffset;
                 }
                 go.transform.position = tempTranslate;
+                if (playerList[i].hand[j].locationTag == Card.LOCATIONTAGS.DRAWN)
+                {
+                    tempTranslate.y -= cardOffset;
+                }
                
                 go.GetComponent<SpriteRenderer>().sprite = cardSprites[playerList[i].hand[j].spriteNumber];
 

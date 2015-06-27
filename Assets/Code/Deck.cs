@@ -8,6 +8,11 @@ public class Deck{
     public List<Card> drawList = new List<Card>();
     public List<Card> discardList = new List<Card>();
     public List<Player> playerList = new List<Player>();
+    
+    //TODO: Move these to a new class
+    List<Card> _currentSet = new List<Card>();
+    int _lastHandIndex = -1;
+
 	private enum SORTS
 	{
 		VALUE, SUIT
@@ -70,7 +75,8 @@ public class Deck{
                 //this is handled above
                 break;
             case GameState.PLACE_SET:
-                gameState = GameState.DISCARDING;
+                //_handlePlaceContract();    
+                //gameState = GameState.DISCARDING;
                 break;
             case GameState.PLACE_RUN:
                 gameState = GameState.DISCARDING;
@@ -103,6 +109,11 @@ public class Deck{
                 _handleDiscard(this.currentGameObjectHit);
                 return;
             }
+
+            if (gameState == GameState.PLACE_SET)
+            {
+                _handlePlaceContract();
+            }
         }
     }
 
@@ -114,6 +125,11 @@ public class Deck{
         {
             this.lastButtonHit = input;
             Debug.Log("Button Clicked: " + input.getText());
+            
+            //Lower any raised cards
+            for (int i = 0; i < playerList[0].hand.Count; i++)
+                if (playerList[0].hand[i].locationTag != Card.LOCATIONTAGS.DEFAULT)
+                    playerList[0].hand[i].setLocationTag(Card.LOCATIONTAGS.DEFAULT);
 
             if (input.getText() == Drawing.sortSuitButtonName)
             {
@@ -132,7 +148,7 @@ public class Deck{
                     _handlePlaceContract();
                 }
 
-                gameState = GameState.DISCARDING;
+                //gameState = GameState.DISCARDING;
             }
         }
     }
@@ -205,14 +221,35 @@ public class Deck{
 
     private void _handlePlaceSet(int numberOfSets, int setLength = 3)
     {
-        for(int i = 0; i < numberOfSets; i++)
+        gameState = GameState.PLACE_SET;
+
+        if (_currentSet.Count < setLength)
         {
             //TODO: Implement
+            if (currentGameObjectHit.name.Length >= 11
+                && currentGameObjectHit.name.Substring(0, 11) == "Player0Card")
+            {
+                _lastHandIndex = int.Parse(currentGameObjectHit.name.Substring(11));
+                Debug.Log("trying to raise: " + _lastHandIndex);
+
+                //Toggle if the card is raised or not.
+                if (playerList[0].hand[_lastHandIndex].locationTag == Card.LOCATIONTAGS.DEFAULT)
+                    playerList[0].hand[_lastHandIndex].setLocationTag(Card.LOCATIONTAGS.DRAWN);
+                else if (playerList[0].hand[_lastHandIndex].locationTag == Card.LOCATIONTAGS.DRAWN)
+                    playerList[0].hand[_lastHandIndex].setLocationTag(Card.LOCATIONTAGS.DEFAULT);
+                //_currentSet.Add(playerList[0].hand[_lastHandIndex]);
+            }
+        }
+        else
+        {
+            Debug.Log("The state moves on");
         }
     }
 
     private void _handlePlaceRun(int numberOfRuns, int runLength = 3)
     {
+        gameState = GameState.PLACE_RUN;
+
         for (int i = 0; i < numberOfRuns; i++)
         {
             //TODO: Implement
