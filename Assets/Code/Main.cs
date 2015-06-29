@@ -24,7 +24,7 @@ public class Main : MonoBehaviour {
         deck.handleInput(inputs.getLastGameObjectHit(), inputs.getLastButtonHit());
         
         //this will draw the game that the deck establishes
-        renderer.updateState(deck.playerList, deck.drawList, deck.discardList);
+        renderer.updateState(deck.gameState, deck.playerList, deck.drawList, deck.discardList);
         renderer.draw();
 	}
 }

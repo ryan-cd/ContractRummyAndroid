@@ -25,11 +25,11 @@ public class Deck{
     public ButtonWrapper lastButtonHit = null;
     public ButtonWrapper currentButtonHit = null;
 
-    private enum GameState
+    public enum GameState
     {
         MENU, DEALING, DRAWING, CHECK, CONTRACT, PLACE_SET, PLACE_RUN, DISCARDING
     };
-    private GameState gameState;
+    public GameState gameState { get; private set; }
 
     
 
@@ -95,7 +95,7 @@ public class Deck{
         if (this.currentGameObjectHit != this.lastGameObjectHit)
         {
             if (input != null)
-                Debug.Log("Card: " + input.name + " Sprite: " + input.GetComponent<SpriteRenderer>().sprite);
+                Debug.Log("Card: " + input.name + " Sprite: " + input.GetComponent<SpriteRenderer>().sprite + gameState);
 
             this.lastGameObjectHit = this.currentGameObjectHit;
             if (gameState == GameState.DRAWING)
@@ -121,15 +121,19 @@ public class Deck{
     {
         this.currentButtonHit = input;
 
-        if (this.currentButtonHit != this.lastButtonHit && input != null)
+        if (((this.currentButtonHit != this.lastButtonHit) && input != null)
+            || this.currentGameObjectHit != this.lastGameObjectHit)
         {
             this.lastButtonHit = input;
             Debug.Log("Button Clicked: " + input.getText());
             
-            //Lower any raised cards
-            for (int i = 0; i < playerList[0].hand.Count; i++)
-                if (playerList[0].hand[i].locationTag != Card.LOCATIONTAGS.DEFAULT)
-                    playerList[0].hand[i].setLocationTag(Card.LOCATIONTAGS.DEFAULT);
+            //Lower any raised cards if the player isn't placing a contract
+            if (gameState != GameState.PLACE_SET && gameState != GameState.PLACE_RUN)
+            {
+                for (int i = 0; i < playerList[0].hand.Count; i++)
+                    if (playerList[0].hand[i].locationTag != Card.LOCATIONTAGS.DEFAULT)
+                        playerList[0].hand[i].setLocationTag(Card.LOCATIONTAGS.DEFAULT);
+            }
 
             if (input.getText() == Drawing.sortSuitButtonName)
             {
@@ -141,14 +145,40 @@ public class Deck{
                 playerList[0].sortByValue();
             }
 
+            //Note the contract button is used to enter contract placement mode
+            //and to confirm a selected run or set to place
             else if (input.getText() == Drawing.contractButtonName)
             {
                 if (playerList[0].hasContract() && gameState == GameState.CONTRACT)
                 {
                     _handlePlaceContract();
                 }
+            }
 
-                //gameState = GameState.DISCARDING;
+            else if (input.getText() == Drawing.setButtonName)
+            {
+                if (gameState == GameState.PLACE_SET)
+                {
+                    if (selectedSetIsValid())
+                    {
+                        Debug.Log("Valid Set");
+                    }
+                    else
+                        Debug.Log("Selected set is not valid");
+                }
+            }
+
+            else if (input.getText() == Drawing.runButtonName)
+            {
+                if (gameState == GameState.PLACE_RUN)
+                {
+                    if (selectedSetIsValid())
+                    {
+                        Debug.Log("Valid Run");
+                    }
+                    else
+                        Debug.Log("Selected run is not valid");
+                }
             }
         }
     }
@@ -265,6 +295,31 @@ public class Deck{
         }
         else
             gameState = GameState.DISCARDING;
+    }
+
+    /// <summary>
+    /// TODO: Make this ensure the set is as long as contract requires.
+    /// </summary>
+    private bool selectedSetIsValid()
+    {
+        List<int> selectedSet = new List<int>();
+        for (int i = 0; i < playerList[0].hand.Count; i++)
+        {
+            if (playerList[0].hand[i].locationTag == Card.LOCATIONTAGS.DRAWN)
+            {
+                if (selectedSet.Count > 1)
+                {
+                    if (playerList[0].hand[i].value != selectedSet[0])
+                        return false;
+                }
+                selectedSet.Add(playerList[0].hand[i].value);
+            }
+        }
+
+        if (selectedSet.Count < 3)
+            return false;
+        
+        return true;
     }
 
     /*

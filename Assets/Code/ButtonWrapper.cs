@@ -20,4 +20,10 @@ public class ButtonWrapper : MonoBehaviour{
     {
         return button.GetComponentInChildren<Text>().text;
     }
+
+    //setters
+    public void setText(string newText)
+    {
+        button.GetComponentInChildren<Text>().text = newText;
+    }
 }

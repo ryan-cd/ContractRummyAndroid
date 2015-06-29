@@ -30,6 +30,8 @@ public class Drawing : MonoBehaviour {
     public static string sortSuitButtonName = "Sort By Suit"; //this object is directly referenced by Deck
     public static string sortValueButtonName = "Sort By Value"; //this object is directly referenced by Deck
     public static string contractButtonName = "Place Contract"; //this object is directly referenced by Deck
+    public static string setButtonName = "Place Set"; //this object is directly referenced by Deck
+    public static string runButtonName = "Place Run"; //this object is directly referenced by Deck
     public static Vector3 sortSuitButtonPosition = new Vector3(300, -200, 10);
     public static Vector3 sortValueButtonPosition = new Vector3(300, -230, 10);
     public static Vector3 contractButtonPosition = new Vector3(-290, -200, 10);
@@ -86,8 +88,20 @@ public class Drawing : MonoBehaviour {
 	
 	}
 
-    public void updateState(List<Player> playerList, List<Card> drawList, List<Card> discardList)
+    public void updateState(Deck.GameState gameState, List<Player> playerList, List<Card> drawList, List<Card> discardList)
     {
+        switch (gameState)
+        {
+            case Deck.GameState.PLACE_RUN:
+                contractButton.setText(runButtonName);
+                break;
+            case Deck.GameState.PLACE_SET:
+                contractButton.setText(setButtonName);
+                break;
+            default:
+                contractButton.setText(contractButtonName);
+                break;
+        }
         this.playerList = playerList;
         this.drawList = drawList;
         this.discardList = discardList;
