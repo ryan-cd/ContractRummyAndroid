@@ -110,7 +110,6 @@ public class Algorithms {
 
         for (int i = 0; i < sortedCards.Count - 1; i++)
         {
-            //Debug.Log(sortedCards[i].ToString());
             if (sortedCards[i + 1].value == sortedCards[i].value)
             {
                 lengthOfCurrentSet++;
@@ -126,6 +125,10 @@ public class Algorithms {
                 lengthOfCurrentSet = 1;
             }
         }
+
+        //one last check to see if the last iteration was the end of a set
+        if (lengthOfCurrentSet >= 3)
+            numberOfSets++;
 
         return (numberOfSets >= 2) ? true : false;
     }
