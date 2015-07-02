@@ -7,6 +7,8 @@ public class Main : MonoBehaviour {
     private Inputs inputs = null;   //controller
     public Drawing renderer = null; //view
 
+    private bool _firstRun = true;
+
     void Awake()
     {
         renderer = gameObject.AddComponent<Drawing>();
@@ -21,10 +23,16 @@ public class Main : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        deck.handleInput(inputs.getLastGameObjectHit(), inputs.getLastButtonHit());
+        if (inputs.inputExists() || _firstRun)
+        {
+            deck.handleInput(inputs.getLastGameObjectHit(), inputs.getLastButtonHit());
+            _firstRun = false;
+        }
         
         //this will draw the game that the deck establishes
         renderer.updateState(deck.gameState, deck.playerList, deck.drawList, deck.discardList);
         renderer.draw();
+
+        inputs.resetInputs();
 	}
 }

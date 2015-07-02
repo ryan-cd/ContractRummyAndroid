@@ -8,7 +8,8 @@ public class Deck{
     public List<Card> drawList = new List<Card>();
     public List<Card> discardList = new List<Card>();
     public List<Player> playerList = new List<Player>();
-    
+    private Inputs.InputTypes lastInputType = Inputs.InputTypes.GAME_OBJECT;
+
     //TODO: Move these to a new class
     List<Card> _currentSet = new List<Card>();
     int _lastHandIndex = -1;
@@ -92,12 +93,17 @@ public class Deck{
     {
         this.currentGameObjectHit = input;
 
-        if (this.currentGameObjectHit != this.lastGameObjectHit)
+        if (input != null
+            && (this.currentGameObjectHit != this.lastGameObjectHit
+            || lastInputType == Inputs.InputTypes.BUTTON
+            || (currentGameObjectHit.name.Length >= 11
+                && currentGameObjectHit.name.Substring(0, 11) == "Player0Card")))
         {
-            if (input != null)
-                Debug.Log("Card: " + input.name + " Sprite: " + input.GetComponent<SpriteRenderer>().sprite + gameState);
+            Debug.Log("Card: " + input.name + " Sprite: " + input.GetComponent<SpriteRenderer>().sprite + gameState);
 
             this.lastGameObjectHit = this.currentGameObjectHit;
+            this.lastInputType = Inputs.InputTypes.GAME_OBJECT;
+
             if (gameState == GameState.DRAWING)
             {
                 _handleDraw(this.currentGameObjectHit);
@@ -121,10 +127,12 @@ public class Deck{
     {
         this.currentButtonHit = input;
 
-        if (((this.currentButtonHit != this.lastButtonHit) && input != null)
-            || this.currentGameObjectHit != this.lastGameObjectHit)
+        if ((this.currentButtonHit != this.lastButtonHit
+            || lastInputType == Inputs.InputTypes.GAME_OBJECT)
+            && input != null)
         {
             this.lastButtonHit = input;
+            this.lastInputType = Inputs.InputTypes.BUTTON;
             Debug.Log("Button Clicked: " + input.getText());
             
             //Lower any raised cards if the player isn't placing a contract
@@ -255,8 +263,9 @@ public class Deck{
 
         if (_currentSet.Count < setLength)
         {
-            //TODO: Implement
-            if (currentGameObjectHit.name.Length >= 11
+            //TODO: Implement taking contracts into their own piles
+            if (currentGameObjectHit != null
+                && currentGameObjectHit.name.Length >= 11
                 && currentGameObjectHit.name.Substring(0, 11) == "Player0Card")
             {
                 _lastHandIndex = int.Parse(currentGameObjectHit.name.Substring(11));

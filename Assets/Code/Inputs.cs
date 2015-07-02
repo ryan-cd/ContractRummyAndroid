@@ -3,6 +3,7 @@ using System.Collections;
 
 public class Inputs : MonoBehaviour {
 
+    public enum InputTypes { GAME_OBJECT, BUTTON };
     private static GameObject lastGameObjectHit;
     private static ButtonWrapper lastButtonHit;
 	// Use this for initialization
@@ -29,8 +30,19 @@ public class Inputs : MonoBehaviour {
         lastButtonHit = buttonWrapper;
     }
 
+    public void resetInputs()
+    {
+        lastButtonHit = null;
+        lastGameObjectHit = null;
+    }
+
 
     //getters
+    public bool inputExists()
+    {
+        return !(lastGameObjectHit == null && lastButtonHit == null);
+    }
+
     public GameObject getLastGameObjectHit()
     {
         return Inputs.lastGameObjectHit;
