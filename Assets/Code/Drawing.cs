@@ -10,7 +10,8 @@ public class Drawing : MonoBehaviour {
     private Vector3 player2Position = new Vector3(-7, 4, 20);
     private Vector3 player3Position = new Vector3(-4, 4, 20);
     private Vector3 player4Position = new Vector3(7, 4, 20);
-    public float cardOffset = 0.65f;
+    public float cardSpacingOffset = 0.65f;
+    public float contractOffset = 2f; //distance the contract is drawn from the player position
     public List<Vector3> playerPositionList = new List<Vector3>();
     private Vector3 drawPilePosition = new Vector3(-1, 0, 20);
     private Vector3 discardPilePosition = new Vector3(1, 0, 20);
@@ -39,6 +40,7 @@ public class Drawing : MonoBehaviour {
     void Awake()
     {
         cardSprites = Resources.LoadAll<Sprite>("playingCards");
+
         playerPositionList.Add(player1Position);
         playerPositionList.Add(player2Position);
         playerPositionList.Add(player3Position);
@@ -72,11 +74,6 @@ public class Drawing : MonoBehaviour {
             () => Inputs.setLastButtonHit(contractButton)
         );
     }
-    
-    public static void hello()
-    {
-        Debug.Log("Hello");
-    }
 
 	// Use this for initialization
 	void Start () {
@@ -102,6 +99,7 @@ public class Drawing : MonoBehaviour {
                 contractButton.setText(contractButtonName);
                 break;
         }
+
         this.playerList = playerList;
         this.drawList = drawList;
         this.discardList = discardList;
@@ -111,15 +109,16 @@ public class Drawing : MonoBehaviour {
 
     public void draw()
     {
-        _drawPlayerHands();
-        _drawPiles();
+        drawPlayerHands();
+        drawContracts();
+        drawPiles();
     }
 
-    private void _drawPlayerHands()
+    private void drawPlayerHands()
     {
         for (int i = 0; i < 4; i++)
         {
-            _flushHands(i);
+            flushHand(i);
 
             Vector3 tempTranslate = playerPositionList[i];
             
@@ -139,28 +138,28 @@ public class Drawing : MonoBehaviour {
 
                 if (playerList[i].hand[j].locationTag == Card.LOCATIONTAGS.DRAWN)
                 {
-                    tempTranslate.y += cardOffset;
+                    tempTranslate.y += cardSpacingOffset;
                 }
                 go.transform.position = tempTranslate;
                 if (playerList[i].hand[j].locationTag == Card.LOCATIONTAGS.DRAWN)
                 {
-                    tempTranslate.y -= cardOffset;
+                    tempTranslate.y -= cardSpacingOffset;
                 }
                
                 go.GetComponent<SpriteRenderer>().sprite = cardSprites[playerList[i].hand[j].spriteNumber];
 
 
                 if (i % 2 == 0)
-                    tempTranslate.x += cardOffset;
+                    tempTranslate.x += cardSpacingOffset;
                 else
-                    tempTranslate.y -= cardOffset;
-                tempTranslate.z -= cardOffset;
+                    tempTranslate.y -= cardSpacingOffset;
+                tempTranslate.z -= cardSpacingOffset;
             }
         }
     }
 
     //delete gameobjects that are no longer in use by that player
-    private void _flushHands(int player)
+    private void flushHand(int player)
     {
         for (int w = 13; w >= 0 && w > playerList[player].hand.Count - 1; w--)
         {
@@ -171,16 +170,74 @@ public class Drawing : MonoBehaviour {
             }
         }
     }
-
-    private void _drawPiles()
+    
+    private void drawContracts()
     {
-        _flushDrawPiles();
-        _drawDrawPile();
-        _drawDiscardPile();
+        for (int i = 0; i < 4; i++)
+        {
+            Vector3 tempTranslate = playerPositionList[i];
+            if (i == 0)
+                tempTranslate.y += contractOffset;
+            else if (i == 1)
+                tempTranslate.x += contractOffset;
+            else if (i == 2)
+                tempTranslate.y -= contractOffset;
+            else if (i == 3)
+                tempTranslate.x -= contractOffset;
+
+            drawSets(i, tempTranslate);
+            drawRuns(i, tempTranslate);
+        }
+    }
+
+    private void drawSets(int player, Vector3 location)
+    {
+        for (int i = 0; i < playerList[player].sets.Count; i++)
+        {
+            for (int j = 0; j < playerList[player].sets[i].Count; j++)
+            {
+                GameObject go;
+                go = GameObject.Find("Player" + player + "Set" + i + "Card" + j);
+                if (go == null)
+                {
+                    go = new GameObject("Player" + player + "Set" + i + "Card" + j);
+                    go.AddComponent<SpriteRenderer>();
+                    go.AddComponent<BoxCollider>();
+                    go.GetComponent<Transform>().localScale = new Vector3(0.7f, 0.7f, 1f);
+                    Vector2 boxColliderSize = new Vector2(1.4f, 1.9f);
+                    go.GetComponent<BoxCollider>().size = boxColliderSize;
+                }
+
+                go.GetComponent<SpriteRenderer>().sprite = cardSprites[playerList[player].sets[i][j].spriteNumber];
+                go.transform.position = location;
+
+                location.x += cardSpacingOffset;
+                
+                location.z -= cardSpacingOffset;
+            }
+
+            if (player % 2 == 0)
+                location.x += cardSpacingOffset;
+            else
+                location.y -= cardSpacingOffset;
+        }
+
+    }
+
+    private void drawRuns(int player, Vector3 location)
+    {
+
+    }
+
+    private void drawPiles()
+    {
+        flushDrawPiles();
+        drawDrawPile();
+        drawDiscardPile();
     }
 
     //remove the pile graphic if it is empty
-    private void _flushDrawPiles()
+    private void flushDrawPiles()
     {
         if (discardList.Count == 0 && GameObject.Find("DiscardPile") != null)
         {
@@ -192,7 +249,7 @@ public class Drawing : MonoBehaviour {
         }
     }
 
-    private void _drawDrawPile()
+    private void drawDrawPile()
     {
         Vector3 translate = pilePositions[0];
 
@@ -212,7 +269,7 @@ public class Drawing : MonoBehaviour {
         }
     }
 
-    private void _drawDiscardPile()
+    private void drawDiscardPile()
     {
         Vector3 translate = pilePositions[1];
 

@@ -10,9 +10,7 @@ public class Deck{
     public List<Player> playerList = new List<Player>();
     private Inputs.InputTypes lastInputType = Inputs.InputTypes.GAME_OBJECT;
 
-    //TODO: Move these to a new class
-    List<Card> _currentSet = new List<Card>();
-    int _lastHandIndex = -1;
+    
 
 	private enum SORTS
 	{
@@ -170,6 +168,16 @@ public class Deck{
                     if (selectedSetIsValid())
                     {
                         Debug.Log("Valid Set");
+                        List<Card> cards = new List<Card>();
+                        for (int i = 0; i < selectedCards().Count; i++)
+                        {
+                            cards.Add(new Card(playerList[0].hand[selectedCards()[i]]));
+                        }
+                        playerList[0].sets.Add(cards);
+                        for (int i = selectedCards().Count - 1; i >= 0; i--)
+                        {
+                            playerList[0].hand.RemoveAt(selectedCards()[i]);
+                        }
                     }
                     else
                         Debug.Log("Selected set is not valid");
@@ -211,8 +219,19 @@ public class Deck{
 
     private void _handleDiscard(GameObject currentGameObejectHit)
     {
-        string cardNumberString = currentGameObjectHit.name.Substring(11);
-        int cardNumber = int.Parse(cardNumberString);
+        string cardNumberAsString;
+        int cardNumber;
+
+        try
+        {
+            cardNumberAsString = currentGameObjectHit.name.Substring(11);
+            cardNumber = int.Parse(cardNumberAsString);
+        }
+        catch
+        {
+            Debug.Log(currentGameObjectHit.name + " cannot be discarded");
+            return;
+        }
 
         if (currentGameObjectHit.name.Substring(0, 11) == "Player0Card")
         {
@@ -261,28 +280,30 @@ public class Deck{
     {
         gameState = GameState.PLACE_SET;
 
-        if (_currentSet.Count < setLength)
-        {
+        int selectedCard = -1;
+
+        //if (!(selectedCards().Count >= setLength)
+            //&& selectedSetIsValid())
+        //{
             //TODO: Implement taking contracts into their own piles
             if (currentGameObjectHit != null
                 && currentGameObjectHit.name.Length >= 11
                 && currentGameObjectHit.name.Substring(0, 11) == "Player0Card")
             {
-                _lastHandIndex = int.Parse(currentGameObjectHit.name.Substring(11));
-                Debug.Log("trying to raise: " + _lastHandIndex);
+                selectedCard = int.Parse(currentGameObjectHit.name.Substring(11));
 
                 //Toggle if the card is raised or not.
-                if (playerList[0].hand[_lastHandIndex].locationTag == Card.LOCATIONTAGS.DEFAULT)
-                    playerList[0].hand[_lastHandIndex].setLocationTag(Card.LOCATIONTAGS.DRAWN);
-                else if (playerList[0].hand[_lastHandIndex].locationTag == Card.LOCATIONTAGS.DRAWN)
-                    playerList[0].hand[_lastHandIndex].setLocationTag(Card.LOCATIONTAGS.DEFAULT);
-                //_currentSet.Add(playerList[0].hand[_lastHandIndex]);
+                if (playerList[0].hand[selectedCard].locationTag == Card.LOCATIONTAGS.DEFAULT)
+                    playerList[0].hand[selectedCard].setLocationTag(Card.LOCATIONTAGS.DRAWN);
+                else if (playerList[0].hand[selectedCard].locationTag == Card.LOCATIONTAGS.DRAWN)
+                    playerList[0].hand[selectedCard].setLocationTag(Card.LOCATIONTAGS.DEFAULT);
+                
             }
-        }
-        else
-        {
-            Debug.Log("The state moves on");
-        }
+        //}
+        //else
+        //{
+            
+        //}
     }
 
     private void _handlePlaceRun(int numberOfRuns, int runLength = 3)
@@ -307,7 +328,26 @@ public class Deck{
     }
 
     /// <summary>
+    /// The hand index of the cards that are selected
+    /// </summary>
+    /// <returns></returns>
+    private List<int> selectedCards()
+    {
+        List<int> cards = new List<int>();
+
+        for (int i = 0; i < playerList[0].hand.Count; i++)
+        {
+            if (playerList[0].hand[i].locationTag == Card.LOCATIONTAGS.DRAWN)
+            {
+                cards.Add(i);
+            }
+        }
+
+        return cards;
+    }
+    /// <summary>
     /// TODO: Make this ensure the set is as long as contract requires.
+    /// TODO: Make this function use the selectedCards() function
     /// </summary>
     private bool selectedSetIsValid()
     {

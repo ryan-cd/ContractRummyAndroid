@@ -16,6 +16,9 @@ public class Player {
             throw new UnityException("Player initialized with invalid number of cards");
 
         this.hand = new List<Card>(hand);
+
+        sets = new List<List<Card>>();
+        runs = new List<List<Card>>();
     }
     
     // Use this for initialization
