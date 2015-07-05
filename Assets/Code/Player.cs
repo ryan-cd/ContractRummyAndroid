@@ -74,6 +74,10 @@ public class Player {
         return Algorithms.hasContract(hand, contractNumber);
     }
 
+    public bool hasPlacedContract()
+    {
+        return sets.Count > 0 || runs.Count > 0;
+    }
 
     /*
      * MUTATORS

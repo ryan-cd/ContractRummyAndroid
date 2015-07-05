@@ -8,10 +8,8 @@ public class Deck{
     public List<Card> drawList = new List<Card>();
     public List<Card> discardList = new List<Card>();
     public List<Player> playerList = new List<Player>();
+
     private Inputs.InputTypes lastInputType = Inputs.InputTypes.GAME_OBJECT;
-
-    
-
 	private enum SORTS
 	{
 		VALUE, SUIT
@@ -29,7 +27,6 @@ public class Deck{
         MENU, DEALING, DRAWING, CHECK, CONTRACT, PLACE_SET, PLACE_RUN, DISCARDING
     };
     public GameState gameState { get; private set; }
-
     
 
     public void initialize()
@@ -97,7 +94,7 @@ public class Deck{
             || (currentGameObjectHit.name.Length >= 11
                 && currentGameObjectHit.name.Substring(0, 11) == "Player0Card")))
         {
-            Debug.Log("Card: " + input.name + " Sprite: " + input.GetComponent<SpriteRenderer>().sprite + gameState);
+            Debug.Log("Card: " + input.name + " Sprite: " + input.GetComponent<SpriteRenderer>().sprite);
 
             this.lastGameObjectHit = this.currentGameObjectHit;
             this.lastInputType = Inputs.InputTypes.GAME_OBJECT;
@@ -165,19 +162,14 @@ public class Deck{
             {
                 if (gameState == GameState.PLACE_SET)
                 {
+                    if (playerList[0].hasPlacedContract())
+                    {
+                        gameState = GameState.DISCARDING;
+                    }
                     if (selectedSetIsValid())
                     {
                         Debug.Log("Valid Set");
-                        List<Card> cards = new List<Card>();
-                        for (int i = 0; i < selectedCards().Count; i++)
-                        {
-                            cards.Add(new Card(playerList[0].hand[selectedCards()[i]]));
-                        }
-                        playerList[0].sets.Add(cards);
-                        for (int i = selectedCards().Count - 1; i >= 0; i--)
-                        {
-                            playerList[0].hand.RemoveAt(selectedCards()[i]);
-                        }
+                        _placeSelectedCards();
                     }
                     else
                         Debug.Log("Selected set is not valid");
@@ -369,6 +361,20 @@ public class Deck{
             return false;
         
         return true;
+    }
+
+    private void _placeSelectedCards()
+    {
+        List<Card> cards = new List<Card>();
+        for (int i = 0; i < selectedCards().Count; i++)
+        {
+            cards.Add(new Card(playerList[0].hand[selectedCards()[i]]));
+        }
+        playerList[0].sets.Add(cards);
+        for (int i = selectedCards().Count - 1; i >= 0; i--)
+        {
+            playerList[0].hand.RemoveAt(selectedCards()[i]);
+        }
     }
 
     /*
