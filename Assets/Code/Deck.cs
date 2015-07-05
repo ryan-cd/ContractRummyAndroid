@@ -156,6 +156,13 @@ public class Deck{
                 {
                     _handlePlaceContract();
                 }
+
+                if (playerList[0].hasPlacedContract() 
+                    && playerList[0].hasBonusContract()
+                    && gameState == GameState.CONTRACT)
+                {
+                    _handlePlaceContract();
+                }
             }
 
             else if (input.getText() == Drawing.setButtonName)
@@ -313,6 +320,11 @@ public class Deck{
         if (playerList[0].hasContract())
         {
             Debug.Log("Player has contract");
+            gameState = GameState.CONTRACT;
+        }
+        else if (playerList[0].hasPlacedContract() && playerList[0].hasBonusContract())
+        {
+            Debug.Log("Player may place additional sets");
             gameState = GameState.CONTRACT;
         }
         else

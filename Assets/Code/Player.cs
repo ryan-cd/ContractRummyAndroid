@@ -74,6 +74,11 @@ public class Player {
         return Algorithms.hasContract(hand, contractNumber);
     }
 
+    public bool hasBonusContract()
+    {
+        return Algorithms.hasContract(hand, 0);
+    }
+
     public bool hasPlacedContract()
     {
         return sets.Count > 0 || runs.Count > 0;

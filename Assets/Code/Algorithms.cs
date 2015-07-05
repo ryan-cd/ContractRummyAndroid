@@ -80,6 +80,9 @@ public class Algorithms {
     {
         switch (contractNumber)
         {
+            //note contract "0" represents having extra contract cards
+            case 0:
+                return hasSet(cards);
             case 1:
                 return hasContract1(cards);
 
@@ -101,6 +104,30 @@ public class Algorithms {
         }
     }
 
+    private static bool hasSet(List<Card> cards)
+    {
+        List<Card> sortedCards = sortByValue(cards);
+        int lengthOfCurrentSet = 1;
+
+        for (int i = 0; i < sortedCards.Count - 1; i++)
+        {
+            if (sortedCards[i + 1].value == sortedCards[i].value)
+            {
+                lengthOfCurrentSet++;
+                continue;
+            }
+            else if (lengthOfCurrentSet >= 3)
+            {
+                return true;
+            }
+            else
+            {
+                lengthOfCurrentSet = 1;
+            }
+        }
+
+        return (lengthOfCurrentSet >= 3) ? true : false;
+    }
 
     private static bool hasContract1(List<Card> cards)
     {
