@@ -84,6 +84,19 @@ public class Player {
         return sets.Count > 0 || runs.Count > 0;
     }
 
+    public bool canAddToContract(Card newCard)
+    {
+        for (int i = 0; i < sets.Count; i++)
+        {
+            if (sets[i][0].value == newCard.value)
+                return true;
+        }
+
+        //TODO: Implement runs check
+
+        return false;
+    }
+
     /*
      * MUTATORS
      * 
@@ -120,5 +133,14 @@ public class Player {
             throw new UnityException("Invalid run added to player");
         
         runs.Add(newRun);
+    }
+
+    public void addToContract(Card newCard)
+    {
+        for (int i = 0; i < sets.Count; i++)
+        {
+            if (sets[i][0].value == newCard.value)
+                sets[i].Add(newCard);
+        }
     }
 }

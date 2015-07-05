@@ -140,6 +140,7 @@ public class Deck{
 
             if (input.getText() == Drawing.sortSuitButtonName)
             {
+                Debug.Log(gameState);
                 playerList[0].sortBySuit();
             }
 
@@ -159,7 +160,7 @@ public class Deck{
 
                 if (playerList[0].hasPlacedContract() 
                     && playerList[0].hasBonusContract()
-                    && gameState == GameState.CONTRACT)
+                    && (gameState == GameState.CONTRACT || gameState == GameState.DISCARDING))
                 {
                     _handlePlaceContract();
                 }
@@ -216,7 +217,7 @@ public class Deck{
         }
     }
 
-    private void _handleDiscard(GameObject currentGameObejectHit)
+    private void _handleDiscard(GameObject currentGameObjectHit)
     {
         string cardNumberAsString;
         int cardNumber;
@@ -234,6 +235,18 @@ public class Deck{
 
         if (currentGameObjectHit.name.Substring(0, 11) == "Player0Card")
         {
+            //if the player has their contract and they can discard a card onto another player's
+            //contract, forcibly do that
+            for (int i = 0; playerList[0].hasPlacedContract() && i < numPlayers; i++)
+            {
+                if (playerList[i].canAddToContract(playerList[playerTurn].hand[cardNumber]))
+                {
+                    playerList[i].addToContract(playerList[playerTurn].hand[cardNumber]);
+                    playerList[0].hand.RemoveAt(cardNumber);
+                    return;
+                }
+            }
+
             discardList.Add(playerList[playerTurn].hand[cardNumber]);
             playerList[playerTurn].discardCard(cardNumber);
 
