@@ -368,24 +368,28 @@ public class Deck{
     /// </summary>
     private bool selectedSetIsValid()
     {
-        List<int> selectedSet = new List<int>();
+        List<Card> selectedSet = new List<Card>();
         for (int i = 0; i < playerList[0].hand.Count; i++)
         {
             if (playerList[0].hand[i].locationTag == Card.LOCATIONTAGS.DRAWN)
             {
-                if (selectedSet.Count > 1)
+                /*if (selectedSet.Count > 1)
                 {
                     if (playerList[0].hand[i].value != selectedSet[0])
                         return false;
-                }
-                selectedSet.Add(playerList[0].hand[i].value);
+                }*/
+                selectedSet.Add(playerList[0].hand[i]);
             }
         }
 
         if (selectedSet.Count < 3)
+        {
             return false;
+        }
+        else
+            return Algorithms.hasSet(selectedSet);
         
-        return true;
+        
     }
 
     private void _placeSelectedCards()

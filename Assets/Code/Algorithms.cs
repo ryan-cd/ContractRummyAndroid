@@ -76,6 +76,17 @@ public class Algorithms {
         return newHand;
     }
 
+    public static int numWildCards(List<Card> cards)
+    {
+        int returnValue = 0;
+        for (int i = 0; i < cards.Count; i++)
+        {
+            if (cards[i].value == 2)
+                returnValue++;
+        }
+        return returnValue;
+    }
+
     public static bool hasContract(List<Card> cards, int contractNumber)
     {
         switch (contractNumber)
@@ -84,7 +95,7 @@ public class Algorithms {
             case 0:
                 return hasSet(cards);
             case 1:
-                return hasContract1(cards);
+                return hasSet(cards, 2);
 
             //TODO: Implement rest of cases
             case 2:
@@ -104,59 +115,89 @@ public class Algorithms {
         }
     }
 
-    private static bool hasSet(List<Card> cards)
+    public static bool hasSet(List<Card> cards, int numSets = 1, int setSize = 3)
     {
         List<Card> sortedCards = sortByValue(cards);
-        int lengthOfCurrentSet = 1;
+        List<Card> tempCards = new List<Card>(sortedCards);
+        int lastLength = sortedCards.Count;
 
-        for (int i = 0; i < sortedCards.Count - 1; i++)
+        for (int i = 0; i < numSets; i++)
         {
-            if (sortedCards[i + 1].value == sortedCards[i].value)
+            tempCards = _setHelper(tempCards, setSize);
+            if (tempCards.Count == lastLength)
             {
-                lengthOfCurrentSet++;
-                continue;
-            }
-            else if (lengthOfCurrentSet >= 3)
-            {
-                return true;
+                return false;
             }
             else
             {
-                lengthOfCurrentSet = 1;
+                lastLength = tempCards.Count;
             }
         }
 
-        return (lengthOfCurrentSet >= 3) ? true : false;
+        return true;
     }
 
-    private static bool hasContract1(List<Card> cards)
+    //TODO: Make this function report back that it used a two to it's caller. (ie the case where
+    //there is one 2 and two doubles in your hand hasSet will mistakenly say you have a contract
+
+    /// <summary>
+    /// Tries to find a set in the cards. First without using 2s then, using one more 2 at a time
+    /// </summary>
+    /// <param name="sortedCards">The cards to look through. They must be pre sorted by value</param>
+    /// <param name="setSize">Size of the set to look for</param>
+    /// <param name="numTwosAllowed">Number of twos in the provided cards that the algorithm
+    /// can use.</param>
+    /// <returns>If no set was found, it returns the inputted cards unchanged. If a set
+    /// was found it removes it, and then returns the inputted cards without the set</returns>
+    private static List<Card> _setHelper(List<Card> sortedCards, int setSize, int numTwosAllowed=0)
     {
-        List<Card> sortedCards = sortByValue(cards);
-        int lengthOfCurrentSet = 1;
-        int numberOfSets = 0;
+        int baseSetLength = 1 + numTwosAllowed;
+        int lengthOfCurrentSet = baseSetLength;
+        int indexOfCurrentSet = 0;
 
         for (int i = 0; i < sortedCards.Count - 1; i++)
         {
-            if (sortedCards[i + 1].value == sortedCards[i].value)
+            if (sortedCards[i].value == 2)
             {
-                lengthOfCurrentSet++;
+                indexOfCurrentSet = i + 1;
                 continue;
             }
-            else if (lengthOfCurrentSet >= 3)
+
+            if (sortedCards[i + 1].value == sortedCards[i].value)
             {
-                numberOfSets++;
-                lengthOfCurrentSet = 1;
+                if (lengthOfCurrentSet < setSize)
+                {
+                    lengthOfCurrentSet++;
+                }
+
+                if (lengthOfCurrentSet >= setSize)
+                {
+                    try
+                    {
+                        sortedCards.RemoveRange(indexOfCurrentSet, (lengthOfCurrentSet - baseSetLength) + 1);
+                    }
+                    catch (UnityException ex)
+                    {
+                        throw new UnityException("Tried to remove an invalid range in the hasSet algorithm");
+                    }
+                    return new List<Card>(sortedCards);
+                }
+                else
+                    continue;
             }
+
             else
             {
-                lengthOfCurrentSet = 1;
+                lengthOfCurrentSet = baseSetLength;
+                indexOfCurrentSet = i + 1;
             }
         }
 
-        //one last check to see if the last iteration was the end of a set
-        if (lengthOfCurrentSet >= 3)
-            numberOfSets++;
-
-        return (numberOfSets >= 2) ? true : false;
+        if (numWildCards(sortedCards) > numTwosAllowed && numTwosAllowed + 1 <= setSize)
+        {
+            return _setHelper(sortedCards, setSize, numTwosAllowed + 1);
+        }
+        else
+            return sortedCards;
     }
 }

@@ -69,6 +69,11 @@ public class Player {
         hand = Algorithms.sortBySuit(hand);
     }
 
+    public int numWildCards()
+    {
+        return Algorithms.numWildCards(hand);
+    }
+
     public bool hasContract()
     {
         return Algorithms.hasContract(hand, contractNumber);
@@ -88,8 +93,11 @@ public class Player {
     {
         for (int i = 0; i < sets.Count; i++)
         {
-            if (sets[i][0].value == newCard.value)
-                return true;
+            //need to go through the elements of the sets
+            //in case it leads with a 2
+            for(int j = 0; j < sets[i].Count; j++)
+                if (sets[i][j].value == newCard.value || newCard.value == 2)
+                    return true;
         }
 
         //TODO: Implement runs check
@@ -139,8 +147,14 @@ public class Player {
     {
         for (int i = 0; i < sets.Count; i++)
         {
-            if (sets[i][0].value == newCard.value)
-                sets[i].Add(newCard);
+            for (int j = 0; j < sets[i].Count; j++)
+            {
+                if (sets[i][j].value == newCard.value || newCard.value == 2)
+                {
+                    sets[i].Add(newCard);
+                    return;
+                }
+            }
         }
     }
 }
